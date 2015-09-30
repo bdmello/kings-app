@@ -8,26 +8,28 @@ var demoApp = angular.module('demoApp', [
 
 demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {
     $urlRouterProvider
+        .otherwise('/dashboard')
         .when('', '/login')
         .when('/', '/login');
 
     $stateProvider
-    .state('app', {
-      templateUrl: '/partials/app.html'
+    .state('base', {
+      //resolve:appResolvers(),
+      templateUrl: '/partials/base.html'
     })
-    .state('app.login', {
+    .state('base.login', {
       url: "/login",
       templateUrl: '/partials/login.html',
       controller: 'loginCtrl'
     })
-    .state('app.dashboard', {
+    .state('base.dashboard', {
       url: "/dashboard",
       abstract:true,
       resolve:dashboardResolvers(),
       controller: 'dashboardCtrl',
       templateUrl: '/partials/dashboard.html'
     })
-    .state('app.dashboard.classlist', {
+    .state('base.dashboard.objectsList', {
       url: "/:classUid",
       controller: 'listCtrl',
       //resolve: listResolvers(),
@@ -47,7 +49,6 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
         user : [
         'builtApi',
         function(builtApi){
-          console.log("dashboarad resovler")
           builtApi.setHeader({
             application_api_key : builtApi.getAppConfig().api_key
           })
@@ -73,19 +74,15 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
     }
 }]);
 
-demoApp.run( function($rootScope, $location) {
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-        if ( $rootScope.loggedIn == false ) {
-            if ( next.templateUrl == "login.html" ) {
-                $location.path( "/login" );
-
-            } else {
-                $location.path( "/" );
-            }
-        }
+demoApp.run([
+  '$rootScope',
+  '$location',
+  '$state',
+  function($rootScope, $location, $state) {
+    $rootScope.$on( "$stateChangeError", function(event, next, current) {
+       // $state.go('base.login');
     });
-
-});
+}]);
 
 
 

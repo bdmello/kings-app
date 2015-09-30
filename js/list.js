@@ -30,9 +30,16 @@ angular.module('list', ['kings-app.utils'])
     }
 
     function deleteData(data){
-      builtApi.deleteObject(data)
-      console.log('delete',data)
-      console.log('classUid',classUid)
+      builtApi.deleteObject({
+        options :{
+          classUid : classUid,
+          objectsUid: data.uid
+        }
+      }).then(function(res){
+        console.log("res");
+        $scope.newLists.splice($scope.newLists.indexOf(data), 1);
+      })
+      
     }
 
     builtApi.getObjects({

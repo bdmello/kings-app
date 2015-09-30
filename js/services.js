@@ -34,6 +34,9 @@ angular.module('kings-app.utils', [])
       signIn : function(credentials){
        return  $http.post(url+'/user_session', credentials);
       },
+      signOut : function(){
+        return  $http.delete(url+'/user_session', {});
+      },
       getUser : function(){
        return  $http.get(url+'/user'); 
       },
@@ -48,10 +51,7 @@ angular.module('kings-app.utils', [])
 
       },
       deleteObject: function(args){
-        console.log("args", args);
-        console.log("url", url);
-        console.log("headers", headers);
-        var objectUrl = url+'/classes'+args.options.classUid+'/objects'+args.uid;
+        var objectUrl = url+'/classes'+args.options.classUid+'/objects'+args.objectsUid;
         return $http.delete(objectUrl, {
           headers : headers
         });

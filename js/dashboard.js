@@ -19,7 +19,12 @@ angular.module('dashboard', ['kings-app.utils'])
     });
 
     $scope.signOut = function(){
-      console.log('Hey!');
+      builtApi.signOut()
+      .then(function(){
+        $state.go('base.login', {
+          
+        });
+      })
     }
 
 }]);

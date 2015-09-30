@@ -8,10 +8,13 @@ angular.module('login', ['kings-app.utils'])
   '$state',
   function($scope, $location, $http, builtApi, menus, $state) {
     
+    builtApi.getUser()
+    .then(function(user){
+      navigateToList();
+    }, function(){
 
-    if ($scope.user) {
-        return $location.path('/');
-    }
+    })
+    
     $scope.signIn = function () {
       builtApi.signIn({
           user: {
@@ -20,10 +23,8 @@ angular.module('login', ['kings-app.utils'])
           }
         })
         .success(function(data, status, headers, config) {
-          console.log(menus[0].id)
-          $state.go("app.dashboard.classlist", {
-              classUid : menus[0].id
-            })
+          
+          navigateToList()
           
         }).
         error(function(data, status, headers, config) {
@@ -31,15 +32,11 @@ angular.module('login', ['kings-app.utils'])
           // called asynchronously if an error occurs
           // or server returns response with an error status.
         });
-
-        // user.login($scope.email, $scope.password)
-        //     .then(function (user) {
-        //         $sa($scope, function () {
-        //             $location.path("/");
-        //             console.log(user.toJSON());
-        //         })
-        //     }, function (err) {
-        //         console.log('Error', err);
-        //     });
     }
+
+     function navigateToList(){
+          $state.go("base.dashboard.objectsList", {
+              classUid : menus[0].id
+            })
+        }
 }]);
