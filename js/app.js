@@ -5,7 +5,7 @@ var demoApp = angular.module('demoApp', [
     'dashboard'
     ]);
 
-demoApp.config(['$routeProvider', '$locationProvider', function($routeProvider) {
+demoApp.config(['$routeProvider', 'builtApiProvider', function($routeProvider, builtApiProvider) {
     $routeProvider
         .when('/login', {
             controller: 'loginCtrl',
@@ -22,6 +22,11 @@ demoApp.config(['$routeProvider', '$locationProvider', function($routeProvider) 
         .otherwise({
             redirectTo: '/dashboard'
         });
+
+    builtApiProvider.appConfig = {
+        url : "https://kings-backend.built.io",
+        version:"/v1"
+    }
 }]);
 
 demoApp.run( function($rootScope, $location) {

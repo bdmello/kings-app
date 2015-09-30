@@ -3,7 +3,12 @@ angular.module('dashboard', ['kings-app.utils'])
   '$scope',
   '$q',
   '$location',
-  function($scope, $q, $location){
+  '$http',
+  'builtApi',
+  'menu',
+  function($scope, $q, $location, $http, builtApi, menus){
+    $scope.menus = menus;
+    console.log("builtApi", builtApi);
 
     query.toJSON().exec()
         .then(function(objects){
