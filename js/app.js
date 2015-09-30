@@ -34,10 +34,10 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
       templateUrl: '/partials/list.html'
     })
    
-
+    
     builtApiProvider.setAppConfig({
         //url : "https://kings-backend.built.io",
-        url:"http://localhost:3000",
+        url:window.location.protocol+'//'+ window.location.host,
         version:"/v1",
         api_key : "bltbfb51fc159335dd8"
     })
