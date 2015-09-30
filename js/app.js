@@ -22,20 +22,55 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
     })
     .state('app.dashboard', {
       url: "/dashboard",
+      abstract:true,
+      resolve:dashboardResolvers(),
       controller: 'dashboardCtrl',
       templateUrl: '/partials/dashboard.html'
     })
     .state('app.dashboard.classlist', {
-      url: "/dashboard/:class_uid",
+      url: "/:classUid",
       controller: 'listCtrl',
+      resolve: listResolvers(),
       templateUrl: '/partials/list.html'
     })
    
 
     builtApiProvider.setAppConfig({
-        url : "https://kings-backend.built.io",
-        version:"/v1"
+        //url : "https://kings-backend.built.io",
+        url:"http://localhost:3000",
+        version:"/v1",
+        api_key : "bltbfb51fc159335dd8"
     })
+
+    function dashboardResolvers(){
+      return {
+        user : [
+        'builtApi',
+        function(builtApi){
+          console.log("dashboarad resovler")
+          builtApi.setHeader({
+            application_api_key : builtApi.getAppConfig().api_key
+          })
+          return builtApi.getUser();
+        }]
+      }
+    }
+
+    function listResolvers(){
+      return {
+         objects: [
+        'builtApi',
+        '$stateParams',
+        function(builtApi, $stateParams){
+          console.log("listResolvers resovler", builtApi)
+          return builtApi.getObjects({
+            options : {
+              classUid : $stateParams.classUid
+            }
+          });
+        }]
+      }
+    }
 }]);
 
 demoApp.run( function($rootScope, $location) {

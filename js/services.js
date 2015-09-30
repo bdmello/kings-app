@@ -25,11 +25,24 @@ angular.module('kings-app.utils', [])
   '$http',
   function($http) {
     return {
-      setHeader : function(headers){
-        headers = headers;
+      getAppConfig: function(){
+        return appConfig;
+      },
+      setHeader : function(header){
+        headers = header;
       },
       signIn : function(credentials){
        return  $http.post(url+'/user_session', credentials);
+      },
+      getUser : function(){
+       return  $http.get(url+'/user'); 
+      },
+      getObjects: function(args){
+        console.log("args", args.options.classUid, url, headers)
+        var objectUrl = url+'/classes/'+args.options.classUid+'/objects';
+        return $http.get(objectUrl, {
+                 headers : headers
+                }); 
       }
     };
   }];
