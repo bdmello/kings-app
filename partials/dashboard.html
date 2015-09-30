@@ -6,14 +6,11 @@
         </button>
     </div>
     <div class="aside">
-        <div class="class"><a href="">Players</a></div>
-        <div class="class"><a href="">Coaches</a></div>
-        <div class="class"><a href="">Config</a></div>
-        <div class="class"><a href="">Transportation</a></div>
-        <div class="class"><a href="">At the Game</a></div>
-        <div class="class"><a href="">Home Feed</a></div>
-        <div class="class"><a href="">Ads</a></div>
-        <div class="class"><a href="">Execute Flow</a></div>
+        <div class="class" ng-repeat="menu in menus" ui-sref-active="selected">
+          <a  ui-sref="app.dashboard.classlist({ class_uid:menu.id })">{{menu.text}}</a></div>
+        <div class="class" ng-class="menu.id===selectedClassId ? 'selected' : '' ">
+          <a href="">Execute Flow</a>
+        </div>
     </div>
     <div class="main-container">
         <a href="" class="btn btn-primary btn-raised" ng-click="newPlayer()">New Player</a>
