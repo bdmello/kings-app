@@ -1,0 +1,55 @@
+#login{
+    margin: 30px auto;
+}
+#login .col-lg-6{
+    float: none;
+    margin: 0 auto;
+}
+
+#player-list{
+    background: #ffffff;
+}
+.main-header{
+    padding: 15px;
+    box-shadow: 0 2px 2px rgba(0,0,0,.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75px;
+    z-index: 99;
+    background: #EEEEEE;
+}
+.main-header img{
+    width: 100px;
+}
+.main-container {
+    margin-left: 200px;
+    margin-top: 75px;
+    padding: 15px;
+}
+.main-container .table{
+    border-top: 1px solid #EEEEEE;
+}
+.aside{
+    background: #dedede;
+    box-shadow: -2px 0 2px rgba(0,0,0,.1) inset;
+    width: 200px;
+    height: 100%;
+    left: 0;
+    position: fixed;
+}
+
+.aside .class{
+    padding: 10px 10px 10px 20px;
+    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+}
+
+.aside .class a{
+    color: #4c4c4c;
+}
+.aside .class a:hover{
+    text-decoration: none;
+    color: #00796b;
+}
