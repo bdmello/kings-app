@@ -10,13 +10,20 @@ angular.module('kings-app.utils', [])
 }])
 .provider('builtApi', [function(){
   //application config variable
-  this.appConfig = {};
-
-  var self    = this;  
-  var  url    = self.appConfig.url+self.appConfig.version;
+  var appConfig = {};
   var headers = {};
+  var self    = this;  
+  var url =  "";
+  
+  self.setAppConfig = function(config){
+    appConfig = config;
+    url    = appConfig.url+appConfig.version;
+  }
 
-  this.$get = [function() {
+
+  self.$get = [
+  '$http',
+  function($http) {
     return {
       setHeader : function(headers){
         headers = headers;

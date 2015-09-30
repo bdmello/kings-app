@@ -4,8 +4,10 @@ angular.module('login', ['kings-app.utils'])
   '$location',
   '$http',
   'builtApi',
-  function($scope, $location, $http, builtApi) {
-    var url = appConfig.url+appConfig.version;
+  'menu',
+  '$state',
+  function($scope, $location, $http, builtApi, menus, $state) {
+    
 
     if ($scope.user) {
         return $location.path('/');
@@ -18,7 +20,10 @@ angular.module('login', ['kings-app.utils'])
           }
         })
         .success(function(data, status, headers, config) {
-          $location.path('/dashboard')
+          $state.go("app.dashboard.classlist", {
+            class_uid : menus[0].id
+          })
+          
         }).
         error(function(data, status, headers, config) {
           alert("Ops validation failed")

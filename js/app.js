@@ -1,32 +1,41 @@
 var demoApp = angular.module('demoApp', [
-    'ngRoute',
+    'ui.router',
     'ui.bootstrap.modal',
     'login',
-    'dashboard'
+    'dashboard',
+    'list'
     ]);
 
-demoApp.config(['$routeProvider', 'builtApiProvider', function($routeProvider, builtApiProvider) {
-    $routeProvider
-        .when('/login', {
-            controller: 'loginCtrl',
-            templateUrl: '/partials/login.html'
-        })
-        .when('/new', {
-            controller: 'newPlayerController',
-            templateUrl: 'new-player.html'
-        })
-        .when('/dashboard', {
-            controller: 'dashboardCtrl',
-            templateUrl: '/partials/dashboard.html'
-        })
-        .otherwise({
-            redirectTo: '/dashboard'
-        });
+demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {
+    $urlRouterProvider
+        .when('', '/login')
+        .when('/', '/login');
 
-    builtApiProvider.appConfig = {
+    $stateProvider
+    .state('app', {
+      templateUrl: '/partials/app.html'
+    })
+    .state('app.login', {
+      url: "/login",
+      templateUrl: '/partials/login.html',
+      controller: 'loginCtrl'
+    })
+    .state('app.dashboard', {
+      url: "/dashboard",
+      controller: 'dashboardCtrl',
+      templateUrl: '/partials/dashboard.html'
+    })
+    .state('app.dashboard.classlist', {
+      url: "/dashboard/:class_uid",
+      controller: 'listCtrl',
+      templateUrl: '/partials/list.html'
+    })
+   
+
+    builtApiProvider.setAppConfig({
         url : "https://kings-backend.built.io",
         version:"/v1"
-    }
+    })
 }]);
 
 demoApp.run( function($rootScope, $location) {
