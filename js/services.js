@@ -39,7 +39,7 @@ angular.module('kings-app.utils', [])
   id : "players",
   text : "Players"
 },{
-  id : "Coach",
+  id : "coach",
   text : "Coaches"
 },{
   id : "config",

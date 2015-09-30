@@ -7,11 +7,16 @@ angular.module('dashboard', ['kings-app.utils'])
   'builtApi',
   'menu',
   '$state',
-  function($scope, $q, $location, $http, builtApi, menus, $state){
+  'Utils',
+  function($scope, $q, $location, $http, builtApi, menus, $state, utils){
     console.log("$state", $state);
-    var selectedClassId = $state.params.class_uid;
     $scope.menus = menus;
-    console.log("builtApi", builtApi);
+
+    $scope.selectedClassId = null;
+    //set class id
+    utils.sa($scope, function() {
+      $scope.selectedClassId = $state.params.class_uid;
+    });
 
     $scope.signOut = function(){
       console.log('Hey!');

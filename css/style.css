@@ -53,3 +53,8 @@
     text-decoration: none;
     color: #00796b;
 }
+
+/*Testing*/
+.selected {
+    background: #C0BDBD;
+}
