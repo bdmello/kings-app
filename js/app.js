@@ -30,13 +30,13 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
     .state('app.dashboard.classlist', {
       url: "/:classUid",
       controller: 'listCtrl',
-      resolve: listResolvers(),
+      //resolve: listResolvers(),
       templateUrl: '/partials/list.html'
     })
    
 
     builtApiProvider.setAppConfig({
-        //url : "https://kings-backend.built.io",
+        //url : "https://kings-backend.built.io/api",
         url:"http://localhost:3000",
         version:"/v1",
         api_key : "bltbfb51fc159335dd8"
