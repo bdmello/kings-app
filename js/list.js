@@ -47,7 +47,7 @@ angular.module('list', ['kings-app.utils'])
 
     //create new object
     $scope.changeToCreateState = function(){
-      $state.go('app.dashboard.objectsList-create',$state.params);
+      $state.go('base.dashboard.objectsList-create',$state.params);
     }
 
     builtApi.getObjects({
