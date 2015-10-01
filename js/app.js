@@ -4,7 +4,8 @@ var kingsapp = angular.module('kingsapp', [
     'auth',
     'dashboard',
     'list',
-    'objects'
+    'objects',
+    'formBuilder'
     ]);
 
 kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {

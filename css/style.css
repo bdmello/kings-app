@@ -61,3 +61,14 @@
 .hand{
     cursor: pointer;
 }
+.data-col-wrap input, .data-col-wrap input:focus, .data-col-wrap input:active{
+    padding-left: 15px;
+}
+.ui-pnotify{
+    position: absolute;
+    z-index: 1000;
+    right:0 !important;
+}
+.ui-pnotify-icon{
+    float:left;
+}

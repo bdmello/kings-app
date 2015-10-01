@@ -6,8 +6,9 @@ angular.module('auth', ['kings-app.utils'])
   'builtApi',
   'menu',
   '$state',
-  function($scope, $location, $http, builtApi, menus, $state) {
-    
+  'alertService',
+  'utilsService',
+  function($scope, $location, $http, builtApi, menus, $state, Alert, Utils) {
     builtApi.getUser()
     .then(function(user){
       navigateToList();
@@ -24,9 +25,13 @@ angular.module('auth', ['kings-app.utils'])
         })
         .success(function(data, status, headers, config) {
           navigateToList()
-        }).
-        error(function(data, status, headers, config) {
-          alert("Ops validation failed")
+        })
+        .error(function(data, status, headers, config) {
+          Alert.notify({
+            title: data.error_message,
+            content: Utils.parseError(data),
+            type: 'error'
+          });
           // called asynchronously if an error occurs
           // or server returns response with an error status.
         });
@@ -44,7 +49,9 @@ angular.module('auth', ['kings-app.utils'])
   '$state',
   'builtApi',
   '$timeout',
-  function($scope, $state, builtApi, $timeout){
+  'alertService',
+  'utilsService',
+  function($scope, $state, builtApi, $timeout, Alert, Utils){
     $scope.credentials = {
       password : "",
       password_confirmation : ""
@@ -58,17 +65,24 @@ angular.module('auth', ['kings-app.utils'])
       })
       .success(function(data, status, headers, config) {
           console.log("data", data)
-          alert("Please check your mailbox!!");
+          Alert.notify({
+            title: data.notice,
+            content: 'Success',
+            type: 'success'
+          });
         }).
         error(function(data, status, headers, config) {
-          alert("Ops! not a valid user");
+          Alert.notify({
+            title: data.error_message,
+            content: Utils.parseError(data),
+            type: 'error'
+          });
           // called asynchronously if an error occurs
           // or server returns response with an error status.
         });
     }
 
     $scope.resetPassword = function(credentials){
-      console.log("$scope.password_confirmation", lengthValidation(credentials), credentials)
       if(lengthValidation(credentials)){
         credentials.reset_password_token = $scope.authtoken
         builtApi.resetPassword({
@@ -77,16 +91,26 @@ angular.module('auth', ['kings-app.utils'])
           }
         })
         .success(function(data, status, headers, config) {
-            $state.go("base.login", {});
-          }).
-          error(function(data, status, headers, config) {
-            console.log("data", data);
-            alert("Invalid"+data.error_message);
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
+            //$state.go("base.login", {});
+            Alert.notify({
+              title: data.notice,
+              content: 'Success',
+              type: 'success'
+            });
+          })
+        .error(function(data, status, headers, config) {
+            Alert.notify({
+              title: data.error_message,
+              content: Utils.parseError(data),
+              type: 'error'
+            });            
           });
       }else{
-        alert("Invalid length: The password should be equal to aleast 8 characters");
+        Alert.notify({
+              title: "Invalid length",
+              content: "The password should be equal to aleast 8 characters",
+              type: 'error'
+            });            
       }
     }
 
