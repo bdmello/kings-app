@@ -20,14 +20,10 @@ angular.module('list', ['kings-app.utils'])
     $scope.action = function(act, data){
       console.log("act, data", act, data)
       if(act === 'edit')
-        editData(data);
+        changeToEditState(data);
       if(act === 'delete')
         deleteData(data);
         return;
-    }
-
-    function editData(data){
-      console.log('data',data)
     }
 
     function deleteData(data){
@@ -42,12 +38,22 @@ angular.module('list', ['kings-app.utils'])
           $scope.newLists.splice($scope.newLists.indexOf(data), 1);
         })
       }
-      
     }
 
     //create new object
     $scope.changeToCreateState = function(){
       $state.go('base.dashboard.objectsList-create',$state.params);
+    }
+
+    //edit exisiting object
+    function changeToEditState(data){
+      console.log('data',data.uid);
+      var data = {
+        classUid: $state.params.classUid,
+        objectUid: data.uid
+      }
+      console.log('stateparams',$state.params);
+      $state.go('base.dashboard.objectsList-edit', data);
     }
 
     builtApi.getObjects({

@@ -46,6 +46,13 @@ angular.module('kings-app.utils', [])
                  headers : headers
                 }); 
       },
+      getCurrentObject: function(args){
+        console.log('args current object',args);
+        var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectUid;
+        return $http.get(objectUrl, {
+          headers : headers
+        })
+      },
       retrievePassword : function(credentials){
         return  $http.post(url+'/user/forgot_password', credentials.body, {
           headers : headers

@@ -54,6 +54,12 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
       controller: 'objectCreateCtrl',
       templateUrl: '/partials/objects.html'
     })
+    .state('base.dashboard.objectsList-edit',{
+      url: "/:classUid/objects/:objectUid/edit",
+      resolve: objectResolver(),
+      controller: 'objectEditCtrl',
+      template: '<div class="main-container">Edit</div>'
+    })
    
     
     builtApiProvider.setAppConfig({
@@ -104,6 +110,25 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
             }
           });
         }]
+      }
+    }
+
+    /* prefetch object for edit */
+    function objectResolver(){
+      console.log('Object Resolver');
+      return {
+        curerntObject:[
+          'builtApi',
+          '$stateParams',
+          function(builtApi, $stateParams){
+            return builtApi.getCurrentObject({
+              options : {
+                classUid : $stateParams.classUid,
+                objectUid : $stateParams.objectUid
+              }
+            })
+          }
+        ]
       }
     }
 }]);

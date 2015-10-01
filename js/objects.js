@@ -41,4 +41,10 @@ angular.module('objects',[])
           alert('Some Erorr')
         });
       }
-    }]);
+    }])
+  .controller('objectEditCtrl', [
+    '$scope',
+    '$state',
+    function($scope, $state){
+    console.log('Edit Ctrl', $state.params);
+  }])
