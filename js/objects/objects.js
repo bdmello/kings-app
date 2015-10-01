@@ -1,4 +1,4 @@
-angular.module('objects',[])
+angular.module('kings-app.objects',[])
 	.controller('objectCreateCtrl',[
 		'$scope',
 		'currentClass',

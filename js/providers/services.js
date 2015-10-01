@@ -1,13 +1,5 @@
 angular.module('kings-app.utils', [])
-.service('Utils', [function(){
-  this.sa = function(scope, fn) {
-      if (fn)
-        (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
-      else {
-        (scope.$$phase || scope.$root.$$phase) ? '' : scope.$apply();
-      }
-    }
-}])
+
 .provider('builtApi', [function(){
   //application config variable
   var appConfig = {};
@@ -77,8 +69,8 @@ angular.module('kings-app.utils', [])
       }
     };
   }];
-  
-}])
+  }
+])
 .constant('menu', [{
   id : "players",
   text : "Players",

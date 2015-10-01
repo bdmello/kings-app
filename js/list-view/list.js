@@ -1,4 +1,4 @@
-angular.module('list', ['kings-app.utils'])
+angular.module('kings-app.listView', ['kings-app.utils'])
 .controller('listCtrl', [
   '$scope',
   '$location',
@@ -56,7 +56,7 @@ angular.module('list', ['kings-app.utils'])
       }
     }).then(function(res){
       $scope.newLists = res.data.objects;
-      console.log("res", res)
     })
 
-  }]);
+  }
+]);

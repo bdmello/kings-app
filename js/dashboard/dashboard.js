@@ -1,4 +1,4 @@
-angular.module('dashboard', ['kings-app.utils'])
+angular.module('kings-app.dashboard', ['kings-app.utils'])
 .controller('dashboardCtrl', [
   '$scope',
   '$q',
@@ -7,15 +7,15 @@ angular.module('dashboard', ['kings-app.utils'])
   'builtApi',
   'menu',
   '$state',
-  'Utils',
+  //'Utils',
   'user',
-  function($scope, $q, $location, $http, builtApi, menus, $state, utils, user){
+  function($scope, $q, $location, $http, builtApi, menus, $state, user){
     $scope.$emit('user', user);
     console.log("$state", $state);
     $scope.menus = menus;
 
     //set class id
-    utils.sa($scope, function() {
+    //utils.sa($scope, function() {
       $scope.selectedClassId = $state.params.classUid;
-    });
+    //});
 }]);

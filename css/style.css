@@ -72,3 +72,6 @@
 .ui-pnotify-icon{
     float:left;
 }
+.ui-pnotify-closer, .ui-pnotify-sticker{
+ float:right;   
+}

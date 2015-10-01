@@ -32,8 +32,6 @@ angular.module('kings-app.auth', ['kings-app.utils'])
             content: Utils.parseError(data),
             type: 'error'
           });
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
         });
     }
 
@@ -64,7 +62,6 @@ angular.module('kings-app.auth', ['kings-app.utils'])
         }
       })
       .success(function(data, status, headers, config) {
-          console.log("data", data)
           Alert.notify({
             title: data.notice,
             content: 'Success',
@@ -91,7 +88,6 @@ angular.module('kings-app.auth', ['kings-app.utils'])
           }
         })
         .success(function(data, status, headers, config) {
-            //$state.go("base.login", {});
             Alert.notify({
               title: data.notice,
               content: 'Success',
@@ -107,10 +103,10 @@ angular.module('kings-app.auth', ['kings-app.utils'])
           });
       }else{
         Alert.notify({
-              title: "Invalid length",
-              content: "The password should be equal to aleast 8 characters",
-              type: 'error'
-            });            
+          title: "Invalid length",
+          content: "The password should be equal to aleast 8 characters",
+          type: 'error'
+        });            
       }
     }
 
