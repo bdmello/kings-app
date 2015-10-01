@@ -4,7 +4,8 @@ var kingsapp = angular.module('kingsapp', [
     'auth',
     'dashboard',
     'list',
-    'objects'
+    'objects',
+    'formBuilder'
     ]);
 
 kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {
@@ -51,7 +52,7 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
       url: "/:classUid/create",
       resolve: classSchemaResolvers(),
       controller: 'objectCreateCtrl',
-      template: '<div class="main-container"><b>Create<b></div>'
+      templateUrl: '/partials/objects.html'
     })
    
     

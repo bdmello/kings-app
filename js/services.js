@@ -69,6 +69,13 @@ angular.module('kings-app.utils', [])
           data : ""
         });
       },
+      createObject: function(args){
+        var createObjectUrl = url+'/classes/'+args.options.classUid+'/objects';
+        console.log('createObject', args);
+        return $http.post(createObjectUrl, args.body, {
+          headers : headers
+        })
+      },
       getClassSchema: function(args){
         var classesUrl = url+'/classes/'+args.options.classUid;
         return $http.get(classesUrl, {
