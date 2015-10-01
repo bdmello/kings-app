@@ -47,10 +47,10 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
       templateUrl: '/partials/list.html'
     })
    
-
+    
     builtApiProvider.setAppConfig({
-        //url : "https://kings-backend.built.io/api",
-        url:"http://localhost:3000",
+        //url : "https://kings-backend.built.io",
+        url:window.location.protocol+'//'+ window.location.host,
         version:"/v1",
         api_key : "bltbfb51fc159335dd8"
     })
