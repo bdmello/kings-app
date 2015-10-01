@@ -41,11 +41,20 @@ angular.module('kings-app.utils', [])
        return  $http.get(url+'/user'); 
       },
       getObjects: function(args){
-        console.log("args", args.options.classUid, url, headers)
         var objectUrl = url+'/classes/'+args.options.classUid+'/objects';
         return $http.get(objectUrl, {
                  headers : headers
                 }); 
+      },
+      retrievePassword : function(credentials){
+        return  $http.post(url+'/user/forgot_password', credentials.body, {
+          headers : headers
+        });
+      },
+      resetPassword : function(credentials){
+        return  $http.post(url+'/user/reset_password_submit', credentials.body, {
+          headers : headers
+        });
       },
       editObject: function(args){
 

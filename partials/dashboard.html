@@ -1,10 +1,4 @@
 <div id="player-list">
-    <div class="main-header">
-        <img src="images/logo.png">
-        <button class="btn btn-primary btn-flat pull-right" ng-click="signOut()">
-            <i class="mdi-social-people"></i>Logout<div class="ripple-wrapper"></div>
-        </button>
-    </div>
     <div class="aside">
         <div class="class" ng-repeat="menu in menus" ui-sref-active="selected">
           <a  ui-sref="app.dashboard.classlist({ class_uid:menu.id })">{{menu.text}}</a></div>

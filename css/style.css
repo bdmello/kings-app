@@ -1,7 +1,7 @@
-#login{
-    margin: 30px auto;
+.data-col-wrap{
+    margin: 90px auto 0 auto;
 }
-#login .col-lg-6{
+.data-col-wrap .col-lg-6{
     float: none;
     margin: 0 auto;
 }
