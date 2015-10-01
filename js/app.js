@@ -3,7 +3,8 @@ var demoApp = angular.module('demoApp', [
     'ui.bootstrap.modal',
     'login',
     'dashboard',
-    'list'
+    'list',
+    'objects'
     ]);
 
 demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {
@@ -27,16 +28,23 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
       controller: 'dashboardCtrl',
       templateUrl: '/partials/dashboard.html'
     })
-    .state('app.dashboard.classlist', {
+    .state('app.dashboard.objectsList', {
       url: "/:classUid",
       controller: 'listCtrl',
-      //resolve: listResolvers(),
+      resolve: listResolvers(),
       templateUrl: '/partials/list.html'
+    })
+    .state('app.dashboard.objectsList-create',{
+      url: "/:classUid/create",
+      resolve: classSchemaResolvers(),
+      controller: 'objectCreateCtrl',
+      template: '<div class="main-container"><b>Create<b></div>'
     })
    
     
     builtApiProvider.setAppConfig({
         //url : "https://kings-backend.built.io",
+        apihost:'http://code-bltdev.cloudthis.com/v1',
         url:window.location.protocol+'//'+ window.location.host,
         version:"/v1",
         api_key : "bltbfb51fc159335dd8"
@@ -47,7 +55,6 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
         user : [
         'builtApi',
         function(builtApi){
-          console.log("dashboarad resovler")
           builtApi.setHeader({
             application_api_key : builtApi.getAppConfig().api_key
           })
@@ -64,6 +71,21 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
         function(builtApi, $stateParams){
           console.log("listResolvers resovler", builtApi)
           return builtApi.getObjects({
+            options : {
+              classUid : $stateParams.classUid
+            }
+          });
+        }]
+      }
+    }
+
+    function classSchemaResolvers(){
+      return {
+        currentClass:[
+        'builtApi',
+        '$stateParams',
+        function(builtApi, $stateParams){
+          return builtApi.getClassSchema({
             options : {
               classUid : $stateParams.classUid
             }

@@ -21,9 +21,9 @@ angular.module('login', ['kings-app.utils'])
         })
         .success(function(data, status, headers, config) {
           console.log(menus[0].id)
-          $state.go("app.dashboard.classlist", {
+          $state.go("app.dashboard.objectsList", {
               classUid : menus[0].id
-            })
+          })
           
         }).
         error(function(data, status, headers, config) {

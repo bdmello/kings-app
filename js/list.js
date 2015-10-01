@@ -7,6 +7,7 @@ angular.module('list', ['kings-app.utils'])
   '$state',
   'menu',
   function($scope, $location, $http, builtApi, $state, menus) {
+    //console.log($state.params);
     var classUid = $state.params.classUid;
     $scope.newLists = [];
     $scope.actions = ['edit', 'delete']
@@ -33,6 +34,11 @@ angular.module('list', ['kings-app.utils'])
       builtApi.deleteObject(data)
       console.log('delete',data)
       console.log('classUid',classUid)
+    }
+
+    //create new object
+    $scope.changeToCreateState = function(){
+      $state.go('app.dashboard.objectsList-create',$state.params);
     }
 
     builtApi.getObjects({
