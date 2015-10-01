@@ -30,7 +30,7 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
     .state('app.dashboard.classlist', {
       url: "/:classUid",
       controller: 'listCtrl',
-      resolve: listResolvers(),
+      //resolve: listResolvers(),
       templateUrl: '/partials/list.html'
     })
    

@@ -43,6 +43,18 @@ angular.module('kings-app.utils', [])
         return $http.get(objectUrl, {
                  headers : headers
                 }); 
+      },
+      editObject: function(args){
+
+      },
+      deleteObject: function(args){
+        console.log("args", args);
+        console.log("url", url);
+        console.log("headers", headers);
+        var objectUrl = url+'/classes'+args.options.classUid+'/objects'+args.uid;
+        return $http.delete(objectUrl, {
+          headers : headers
+        });
       }
     };
   }];
@@ -50,7 +62,20 @@ angular.module('kings-app.utils', [])
 }])
 .constant('menu', [{
   id : "players",
-  text : "Players"
+  text : "Players",
+  columns : [{
+    name : "Player ID",
+    id : "pid"
+  },{
+    name:"First Name",
+    id: "fn"
+  },{
+    name:"Last Name",
+    id: "ln"
+  },{
+    name:"Player Position",
+    id: "pos"
+  }]
 },{
   id : "coach",
   text : "Coaches"
