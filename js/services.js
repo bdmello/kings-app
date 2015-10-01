@@ -60,9 +60,13 @@ angular.module('kings-app.utils', [])
 
       },
       deleteObject: function(args){
-        var objectUrl = url+'/classes'+args.options.classUid+'/objects'+args.objectsUid;
-        return $http.delete(objectUrl, {
-          headers : headers
+        var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectsUid;
+        console.log("headers", headers);
+        return $http({
+          url : objectUrl,
+          method:"DELETE",
+          headers : headers,
+          data : ""
         });
       }
     };

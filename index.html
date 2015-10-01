@@ -34,7 +34,12 @@
         <script src="js/dashboard.js"></script>
         <script src="js/list.js"></script>
         <script src="js/app.js"></script>
-
+        <script>
+        if (window.location.pathname != "" && window.location.pathname != "/") {
+                console.log("hello")
+                window.location.href = window.location.protocol + "//" + window.location.host + "/" + window.location.search + "#" + window.location.pathname
+            }
+    </script>
     </body>
 
 </html>

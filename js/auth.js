@@ -15,7 +15,7 @@ angular.module('auth', ['kings-app.utils'])
 
     })
     
-    $scope.signIn = function () {
+    $scope.signIn = function (user) {
       builtApi.signIn({
           user: {
             email:$scope.email,
@@ -50,12 +50,10 @@ angular.module('auth', ['kings-app.utils'])
       password_confirmation : ""
     }
     $scope.authtoken = $state.params.authtoken || undefined;
-    $scope.retrievePassword = function(){
+    $scope.retrievePassword = function(userDetail){
       builtApi.retrievePassword({
         body :{
-          user :{
-            email : $scope.email
-          }
+          user : userDetail
         }
       })
       .success(function(data, status, headers, config) {
@@ -70,21 +68,30 @@ angular.module('auth', ['kings-app.utils'])
     }
 
     $scope.resetPassword = function(credentials){
-      console.log("$scope.password_confirmation", credentials)
-      credentials.reset_password_token = $scope.authtoken
-      builtApi.resetPassword({
-        body :{
-          user :credentials
-        }
-      })
-      .success(function(data, status, headers, config) {
-          $state.go("base.login", {});
-        }).
-        error(function(data, status, headers, config) {
-          alert("Invalid");
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-        });
+      console.log("$scope.password_confirmation", lengthValidation(credentials), credentials)
+      if(lengthValidation(credentials)){
+        credentials.reset_password_token = $scope.authtoken
+        builtApi.resetPassword({
+          body :{
+            user :credentials
+          }
+        })
+        .success(function(data, status, headers, config) {
+            $state.go("base.login", {});
+          }).
+          error(function(data, status, headers, config) {
+            console.log("data", data);
+            alert("Invalid"+data.error_message);
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+          });
+      }else{
+        alert("Invalid length: The password should be equal to aleast 8 characters");
+      }
+    }
+
+    function lengthValidation(data){
+      return (data.password.length >= 8 && data.password_confirmation.length >= 8) 
     }
   }
 ]);

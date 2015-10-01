@@ -58,3 +58,6 @@
 .selected {
     background: #C0BDBD;
 }
+.hand{
+    cursor: pointer;
+}

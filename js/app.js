@@ -74,7 +74,6 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
         'builtApi',
         '$stateParams',
         function(builtApi, $stateParams){
-          console.log("listResolvers resovler", builtApi)
           return builtApi.getObjects({
             options : {
               classUid : $stateParams.classUid
