@@ -7,7 +7,7 @@
     </div>
     <div class="aside">
         <div class="class" ng-repeat="menu in menus" ui-sref-active="selected">
-          <a  ui-sref="app.dashboard.classlist({ class_uid:menu.id })">{{menu.text}}</a></div>
+          <a  ui-sref="app.dashboard.classlist({ classUid:menu.id })">{{menu.text}}</a></div>
         <div class="class" ng-class="menu.id===selectedClassId ? 'selected' : '' ">
           <a href="">Execute Flow</a>
         </div>
