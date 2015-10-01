@@ -1,40 +1,53 @@
-var demoApp = angular.module('demoApp', [
+var kingsapp = angular.module('kingsapp', [
     'ui.router',
     'ui.bootstrap.modal',
-    'login',
+    'auth',
     'dashboard',
     'list',
     'objects'
     ]);
 
-demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {
+kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {
     $urlRouterProvider
+        .otherwise('/dashboard')
         .when('', '/login')
         .when('/', '/login');
 
     $stateProvider
-    .state('app', {
-      templateUrl: '/partials/app.html'
+    .state('base', {
+      //resolve:appResolvers(),
+      controller: 'baseCtrl',
+      templateUrl: '/partials/base.html'
     })
-    .state('app.login', {
+    .state('base.login', {
       url: "/login",
       templateUrl: '/partials/login.html',
       controller: 'loginCtrl'
     })
-    .state('app.dashboard', {
+    .state('base.login-retrieve-password', {
+      url: "/user/retrieve-password",
+      templateUrl: '/partials/resetPassword.html',
+      controller: 'resetCtrl'
+    })
+    .state('base.login-reset-password', {
+      url: "/user/reset_password_submit/:authtoken",
+      templateUrl: '/partials/resetPassword.html',
+      controller: 'resetCtrl'
+    })
+    .state('base.dashboard', {
       url: "/dashboard",
       abstract:true,
       resolve:dashboardResolvers(),
       controller: 'dashboardCtrl',
       templateUrl: '/partials/dashboard.html'
     })
-    .state('app.dashboard.objectsList', {
+    .state('base.dashboard.objectsList', {
       url: "/:classUid",
       controller: 'listCtrl',
       resolve: listResolvers(),
       templateUrl: '/partials/list.html'
     })
-    .state('app.dashboard.objectsList-create',{
+    .state('base.dashboard.objectsList-create',{
       url: "/:classUid/create",
       resolve: classSchemaResolvers(),
       controller: 'objectCreateCtrl',
@@ -69,7 +82,6 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
         'builtApi',
         '$stateParams',
         function(builtApi, $stateParams){
-          console.log("listResolvers resovler", builtApi)
           return builtApi.getObjects({
             options : {
               classUid : $stateParams.classUid
@@ -95,23 +107,19 @@ demoApp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', func
     }
 }]);
 
-demoApp.run( function($rootScope, $location) {
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-        if ( $rootScope.loggedIn == false ) {
-            if ( next.templateUrl == "login.html" ) {
-                $location.path( "/login" );
-
-            } else {
-                $location.path( "/" );
-            }
-        }
+kingsapp.run([
+  '$rootScope',
+  '$location',
+  '$state',
+  function($rootScope, $location, $state) {
+    $rootScope.$on( "$stateChangeError", function(event, next, current) {
+       // $state.go('base.login');
     });
-
-});
-
+}]);
 
 
-demoApp.controller('newPlayerController', function($scope) {
+
+kingsapp.controller('newPlayerController', function($scope) {
     
     $scope.model = {};
 
@@ -133,7 +141,32 @@ demoApp.controller('newPlayerController', function($scope) {
     }
 });
 
-demoApp.directive('fieldDirective', function(){
+kingsapp.controller('baseCtrl', [
+    '$scope',
+    '$state',
+    'builtApi',
+    '$rootScope',
+    function($scope, $state, builtApi, $rootScope) {
+    $scope.loggedIn = false;
+
+    $rootScope.$on('user', function(e, data){
+        if(data.data.user){
+            $scope.loggedIn = true;            
+        }
+    });
+    
+    $scope.signOut = function(){
+      builtApi.signOut()
+      .then(function(){
+        $scope.loggedIn = false;
+        $state.go('base.login', {
+          
+        });
+      })
+    }
+}]);
+
+kingsapp.directive('fieldDirective', function(){
     return{
         scope: {
             schema: '=',
@@ -147,7 +180,7 @@ demoApp.directive('fieldDirective', function(){
     }
 });
 
-demoApp.directive('groupDirective', function(){
+kingsapp.directive('groupDirective', function(){
     return{
         scope: {
             schema: '=schema',
@@ -163,7 +196,7 @@ demoApp.directive('groupDirective', function(){
     }
 });
 
-demoApp.directive('multipleDirective', function(){
+kingsapp.directive('multipleDirective', function(){
     return{
         scope: {
             field: '=field',
@@ -179,7 +212,7 @@ demoApp.directive('multipleDirective', function(){
     }
 });
 
-demoApp.directive('textDirective', function(){
+kingsapp.directive('textDirective', function(){
     return{
         scope: {
             field: '=',
@@ -195,7 +228,7 @@ demoApp.directive('textDirective', function(){
     }
 });
 
-demoApp.directive('booleanDirective', function(){
+kingsapp.directive('booleanDirective', function(){
     return{
         scope: {
             field: '=field',
@@ -211,7 +244,7 @@ demoApp.directive('booleanDirective', function(){
     }
 });
 
-demoApp.directive('numberDirective', function(){
+kingsapp.directive('numberDirective', function(){
     return{
         scope: {
             field: '=field',
@@ -226,7 +259,7 @@ demoApp.directive('numberDirective', function(){
         }
     }
 });
-demoApp.directive('fileDirective', function(){
+kingsapp.directive('fileDirective', function(){
     return{
         scope: {
             field: '=field',
@@ -242,7 +275,7 @@ demoApp.directive('fileDirective', function(){
     }
 });
 
-demoApp.directive('linkDirective', function(){
+kingsapp.directive('linkDirective', function(){
     return{
         scope: {
             field: '=field',
@@ -261,7 +294,7 @@ demoApp.directive('linkDirective', function(){
     }
 });
 
-demoApp.directive('dateDirective', function(){
+kingsapp.directive('dateDirective', function(){
     return{
         scope: {
             field: '=field',

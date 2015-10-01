@@ -34,26 +34,39 @@ angular.module('kings-app.utils', [])
       signIn : function(credentials){
        return  $http.post(url+'/user_session', credentials);
       },
+      signOut : function(){
+        return  $http.delete(url+'/user_session', {});
+      },
       getUser : function(){
        return  $http.get(url+'/user'); 
       },
       getObjects: function(args){
-        console.log("args", args)
         var objectUrl = url+'/classes/'+args.options.classUid+'/objects';
         return $http.get(objectUrl, {
                  headers : headers
                 }); 
       },
+      retrievePassword : function(credentials){
+        return  $http.post(url+'/user/forgot_password', credentials.body, {
+          headers : headers
+        });
+      },
+      resetPassword : function(credentials){
+        return  $http.post(url+'/user/reset_password_submit', credentials.body, {
+          headers : headers
+        });
+      },
       editObject: function(args){
 
       },
       deleteObject: function(args){
-        console.log("args", args);
-        console.log("url", url);
+        var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectsUid;
         console.log("headers", headers);
-        var objectUrl = url+'/classes'+args.options.classUid+'/objects'+args.uid;
-        return $http.delete(objectUrl, {
-          headers : headers
+        return $http({
+          url : objectUrl,
+          method:"DELETE",
+          headers : headers,
+          data : ""
         });
       },
       getClassSchema: function(args){
