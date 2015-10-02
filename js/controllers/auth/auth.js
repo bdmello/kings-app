@@ -1,70 +1,78 @@
-angular.module('kings-app.auth', ['kings-app.utils'])
+angular.module('kings-app.auth', ['kings-app.providers', 'kings-app.directives'])
 .controller('loginCtrl', [
   '$scope',
-  '$location',
-  '$http',
-  'builtApi',
+  'dataService',
   'menu',
   '$state',
   'alertService',
   'utilsService',
-  function($scope, $location, $http, builtApi, menus, $state, Alert, Utils) {
-    builtApi.getUser()
-    .then(function(user){
-      navigateToList();
-    }, function(){
+  function($scope, dataService, menus, $state, Alert, Utils) {
+    $scope.loaderStatus = false;
 
-    })
+    //If user is present redirect to dashboard
+    _initUser();
     
     $scope.signIn = function (user) {
-      builtApi.signIn({
+      $scope.loaderStatus = true;
+      dataService.signIn({
           user: {
             email:$scope.email,
             password: $scope.password
           }
         })
         .success(function(data, status, headers, config) {
-          navigateToList()
+          navigateToList();
+          $scope.loaderStatus = false;
         })
         .error(function(data, status, headers, config) {
+          $scope.loaderStatus = false;
           Alert.notify({
             title: data.error_message,
             content: Utils.parseError(data),
             type: 'error'
           });
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
         });
+    }
+
+    function _initUser(){
+      dataService.getUser()
+      .then(function(user){
+        navigateToList();
+      });
     }
 
    function navigateToList(){
       $state.go("base.dashboard.objectsList", {
-        classUid : menus[0].id
+        classUid : menus[0].id,
+        p : 1
       });
     }
-
 }])
 .controller('resetCtrl',[
   '$scope',
   '$state',
-  'builtApi',
-  '$timeout',
+  'dataService',
   'alertService',
   'utilsService',
-  function($scope, $state, builtApi, $timeout, Alert, Utils){
+  function($scope, $state, dataService, Alert, Utils){
     $scope.credentials = {
       password : "",
       password_confirmation : ""
-    }
-    $scope.authtoken = $state.params.authtoken || undefined;
+    };
+    $scope.token = $state.params.token || undefined;
+    $scope.loaderStatus = false;
+    $scope.appUser = $state.current.data.appUser;
+    
+    console.log("if app user", $scope.appUser)
     $scope.retrievePassword = function(userDetail){
-      builtApi.retrievePassword({
+      $scope.loaderStatus = true;
+      dataService.retrievePassword({
         body :{
           user : userDetail
         }
       })
       .success(function(data, status, headers, config) {
-          console.log("data", data)
+          $scope.loaderStatus = false;
           Alert.notify({
             title: data.notice,
             content: 'Success',
@@ -72,26 +80,36 @@ angular.module('kings-app.auth', ['kings-app.utils'])
           });
         }).
         error(function(data, status, headers, config) {
+          $scope.loaderStatus = false;
           Alert.notify({
-            title: data.error_message,
-            content: Utils.parseError(data),
+            title: "Password reset failed",
+            content: data.error_message,
             type: 'error'
           });
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
         });
     }
 
     $scope.resetPassword = function(credentials){
       if(lengthValidation(credentials)){
-        credentials.reset_password_token = $scope.authtoken
-        builtApi.resetPassword({
-          body :{
-            user :credentials
-          }
-        })
+        $scope.loaderStatus = true;
+        credentials.reset_password_token = $scope.token;
+
+        if($scope.appUser){
+          var resetPromise = dataService.resetAppUserPassword({
+            body :{
+              application_user :credentials
+            }
+          });
+        }else{
+          var resetPromise = dataService.resetPassword({
+            body :{
+              user :credentials
+            }
+          });
+        }
+        resetPromise
         .success(function(data, status, headers, config) {
-            //$state.go("base.login", {});
+            $scope.loaderStatus = false;
             Alert.notify({
               title: data.notice,
               content: 'Success',
@@ -99,18 +117,19 @@ angular.module('kings-app.auth', ['kings-app.utils'])
             });
           })
         .error(function(data, status, headers, config) {
+            $scope.loaderStatus = false;
             Alert.notify({
-              title: data.error_message,
-              content: Utils.parseError(data),
+              title: "Password reset failed",
+              content: data.error_message,
               type: 'error'
             });            
           });
       }else{
         Alert.notify({
-              title: "Invalid length",
-              content: "The password should be equal to aleast 8 characters",
-              type: 'error'
-            });            
+          title: "Invalid length",
+          content: "The password should be equal to aleast 8 characters",
+          type: 'error'
+        });            
       }
     }
 

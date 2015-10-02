@@ -1,5 +1,17 @@
  <div class="main-container">
-        <a href="" class="btn btn-primary btn-raised" ng-click="changeToCreateState()">Add new</a>
+        <!-- <button class="btn btn-primary btn-raised pull-left" ng-click="changeToCreateState()" btn-loader="loaderStatus" loading-text="Adding new..."><span class="js-btn-text ">Add new</span></button> -->
+        <div class="col-md-12 custom-pagination clearfix">
+            <h4 class="pull-left">showing <b>{{currentCount}}</b> of <b>{{totalCount}}</b></h4>
+            <ul class="pagination pull-right">
+                <li ng-class="{'disabled':currentPage==1}" ng-click="prevList()"><a href="javascript:void(0)">«</a></li>
+                <!-- <li class="active"><a href="javascript:void(0)">1</a></li>
+                <li><a href="javascript:void(0)">2</a></li>
+                <li><a href="javascript:void(0)">3</a></li>
+                <li><a href="javascript:void(0)">4</a></li>
+                <li><a href="javascript:void(0)">5</a></li> -->
+                <li ng-class="{'disabled':limitReached}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
+            </ul>
+        </div>
         <table class="table table-hover ">
             <thead>
             <tr>

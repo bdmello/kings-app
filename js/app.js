@@ -8,9 +8,13 @@ var kingsapp = angular.module('kingsapp', [
      'formBuilder'
     ]);
 
-kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {
+kingsapp.config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  'dataServiceProvider',
+ function($stateProvider, $urlRouterProvider, dataServiceProvider) {
     $urlRouterProvider
-        .otherwise('/dashboard')
+        .otherwise('/login')
         .when('', '/login')
         .when('/', '/login');
 
@@ -27,12 +31,22 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
     .state('base.login-retrieve-password', {
       url: "/user/retrieve-password",
       templateUrl: 'partials/resetPassword.html',
-      controller: 'resetCtrl'
+      controller: 'resetCtrl',
+      data: {}
     })
     .state('base.login-reset-password', {
-      url: "/user/reset_password_submit/:authtoken",
+      url: "/user/reset_password_submit/:token",
       templateUrl: 'partials/resetPassword.html',
-      controller: 'resetCtrl'
+      controller: 'resetCtrl',
+      data: {}
+    })
+    .state('base.login-resetAppUser-password', {
+      url: '/application/users/reset_password/:token',
+      templateUrl: 'partials/resetPassword.html',
+      controller: 'resetCtrl',
+      data: {
+        appUser: true
+      }
     })
     .state('base.dashboard', {
       url: "/dashboard",
@@ -42,9 +56,9 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
       templateUrl: 'partials/dashboard.html'
     })
     .state('base.dashboard.objectsList', {
-      url: "/:classUid",
+      url: "/:classUid?p&skip",
       controller: 'listCtrl',
-      resolve: listResolvers(),
+      //resolve: listResolvers(),
       templateUrl: 'partials/list.html'
     })
     .state('base.dashboard.objectsList-create',{
@@ -55,24 +69,24 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
     })
    
     
-    builtApiProvider.setAppConfig({
+    dataServiceProvider.setAppConfig({
         // apihost:"https://kings-backend.built.io/v1",
         // url : "https://kings-backend.built.io",
         apihost:'http://code-bltdev.cloudthis.com/v1',
         url:window.location.protocol+'//'+ window.location.host,
         version:"/v1",
-        api_key : "blt33459dc7590dd663"
+        api_key : "bltbfb51fc159335dd8"
     })
 
     function dashboardResolvers(){
       return {
         user : [
-        'builtApi',
-        function(builtApi){
-          builtApi.setHeader({
-            application_api_key : builtApi.getAppConfig().api_key
+        'dataService',
+        function(dataService){
+          dataService.setHeader({
+            application_api_key : dataService.getAppConfig().api_key
           })
-          return builtApi.getUser();
+          return dataService.getUser();
         }]
       }
     }
@@ -80,10 +94,10 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
     function listResolvers(){
       return {
          objects: [
-        'builtApi',
+        'dataService',
         '$stateParams',
-        function(builtApi, $stateParams){
-          return builtApi.getObjects({
+        function(dataService, $stateParams){
+          return dataService.getObjects({
             options : {
               classUid : $stateParams.classUid
             }
@@ -95,10 +109,10 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
     function classSchemaResolvers(){
       return {
         currentClass:[
-        'builtApi',
+        'dataService',
         '$stateParams',
-        function(builtApi, $stateParams){
-          return builtApi.getClassSchema({
+        function(dataService, $stateParams){
+          return dataService.getClassSchema({
             options : {
               classUid : $stateParams.classUid
             }
@@ -108,27 +122,67 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
     }
 }]);
 
+kingsapp.run([
+  'relayService',
+  '$state',
+  '$rootScope',
+  '$timeout',
+  function(Relay, $state, $rootScope, $timeout){
+    //extend Angular's scope allowing you to remove listeners
+    Relay.extendRootScope();
+
+    $rootScope.$on('$viewContentLoading', function(event, viewConfig){ 
+      if(viewConfig.view.self.name === 'base.dashboard.objectsList'){
+        $timeout(function() {
+          Relay.send('show-add-button', true);      
+        }, 100);
+        console.log("asdas")
+      }else{
+        Relay.send('show-add-button', false);      
+      }
+    });
+
+}])
+      
 kingsapp.controller('baseCtrl', [
     '$scope',
     '$state',
-    'builtApi',
+    'dataService',
     '$rootScope',
-    function($scope, $state, builtApi, $rootScope) {
+    'relayService',
+    function($scope, $state, dataService, $rootScope, Relay) {
     $scope.loggedIn = false;
+    $scope.loaderStatus = false;
+    $scope.showAddButton =false;
 
-    $rootScope.$on('user', function(e, data){
+    Relay.onRecieve('user', function(e, data){
         if(data.data.user){
             $scope.loggedIn = true;            
+            $scope.loaderStatus = false;          
+        }else{
+          $scope.showAddButton =false;
         }
     });
     
+    Relay.onRecieve('show-add-button', function(e, data){
+      console.log("asdasdsa")
+        $scope.showAddButton =data;
+    });
+
+    $scope.createObject = function(){
+      Relay.send('create-object');
+    }
+
     $scope.signOut = function(){
-      builtApi.signOut()
+      $scope.loaderStatus = true;
+      dataService.signOut()
       .then(function(){
         $scope.loggedIn = false;
         $state.go('base.login', {
-          
         });
+      })
+      .finally(function(){
+        $scope.loaderStatus = false;          
       })
     }
 }]);

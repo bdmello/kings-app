@@ -3,10 +3,10 @@ angular.module('kings-app.objects',[])
 		'$scope',
 		'currentClass',
 		'user',
-		'builtApi',
-		function($scope, currentClass, user, builtApi){
+		'dataService',
+		function($scope, currentClass, user, dataService){
 			console.log('mclass',currentClass.data.class);
 			console.log('authtoken', user.data.user.authtoken);
-			console.log('api_key', builtApi.getAppConfig().api_key);
-			console.log('api_host', builtApi.getAppConfig().apihost);
+			console.log('api_key', dataService.getAppConfig().api_key);
+			console.log('api_host', dataService.getAppConfig().apihost);
 		}]);
