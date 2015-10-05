@@ -5,7 +5,8 @@ var kingsapp = angular.module('kingsapp', [
      'kings-app.dashboard',
      'kings-app.listView',
      'kings-app.objects',
-     'formBuilder'
+     'formBuilder',
+     'global-directives'
     ]);
 
 kingsapp.config([
@@ -56,7 +57,7 @@ kingsapp.config([
       templateUrl: 'partials/dashboard.html'
     })
     .state('base.dashboard.objectsList', {
-      url: "/:classUid?p&skip",
+      url: "/:classUid?p&skip&filter",
       controller: 'listCtrl',
       //resolve: listResolvers(),
       templateUrl: 'partials/list.html'

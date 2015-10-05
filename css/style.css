@@ -104,14 +104,18 @@
     margin: 12px 0 0 0;
 }
 .pagination{
-    margin:0;
+    margin:0 0 0 10px;
 }
 .pagination > li{
     float:left;
 }
+.pagination>li>a{
+    padding: 4px 12px;
+}
 .pagination .page-selector{
-    margin:0 12px 0 0;
-    width:40px;
+    margin: 0 12px 0 0;
+    width: 40px;
+    height: 30px;
 }
 .custom-pagination .badge{
     font-size: 18px;
@@ -138,4 +142,9 @@
 }
 .table th{
     font-size: 14px;
+}
+.search-wrap{
+    padding: 0;
+    float:left;
+    margin: 3px 10px 0 0;
 }

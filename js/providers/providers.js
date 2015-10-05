@@ -12,7 +12,6 @@ angular.module('kings-app.providers', [])
     url    = appConfig.url+appConfig.version;
   }
 
-
   self.$get = [
   '$http',
   function($http) {
