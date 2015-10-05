@@ -39,6 +39,13 @@ angular.module('kings-app.providers', [])
                  params : args.params
                 }); 
       },
+      getCurrentObject: function(args){
+        console.log('args current object',args);
+        var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectUid;
+        return $http.get(objectUrl, {
+          headers : headers
+        })
+      },
       retrievePassword : function(credentials){
         return  $http.post(url+'/user/forgot_password', credentials.body, {
           headers : headers
@@ -63,6 +70,17 @@ angular.module('kings-app.providers', [])
           headers : headers,
           data : ""
         });
+      },
+      createObject: function(args){
+        var createObjectUrl = url+'/classes/'+args.options.classUid+'/objects';
+        console.log('createObject', args);
+        return $http.post(createObjectUrl, args.body, {
+          headers : headers
+        })
+      },
+      editObject: function(args){
+        var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectUid;
+        return $http.put(objectUrl, args.body, {headers:headers});
       },
       getClassSchema: function(args){
         var classesUrl = url+'/classes/'+args.options.classUid;

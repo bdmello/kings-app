@@ -37,7 +37,7 @@ angular.module('kings-app.listView', ['kings-app.providers'])
 
     $scope.action = function(act, data){
       if(act === 'edit')
-        editData(data);
+        goToEditState(data);
       if(act === 'delete')
         deleteData(data);
       return;
@@ -74,8 +74,15 @@ angular.module('kings-app.listView', ['kings-app.providers'])
         skip : $scope.skip
       });
     }
-    function editData(data){
-      console.log('data',data)
+
+    function goToEditState(data){
+      console.log('data',data);
+      console.log('stateparams',$state.params);
+      var data = {
+        classUid: $state.params.classUid,
+        objectUid: data.uid
+      }
+      $state.go('base.dashboard.objectsList-edit', data);
     }
 
     function deleteData(data){

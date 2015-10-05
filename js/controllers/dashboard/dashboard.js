@@ -15,7 +15,6 @@ angular.module('kings-app.dashboard', ['kings-app.providers'])
     $scope.menus = menus;
 
     //set class id
-    //utils.sa($scope, function() {
-      $scope.selectedClassId = $state.params.classUid;
-    //});
+    $scope.selectedClassId = $state.params.classUid;
+
 }]);

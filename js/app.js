@@ -65,7 +65,16 @@ kingsapp.config([
       url: "/:classUid/create",
       resolve: classSchemaResolvers(),
       controller: 'objectCreateCtrl',
-      template: '<div class="main-container"><b>Create<b></div>'
+      templateUrl: '/partials/objects.html'
+    })
+    .state('base.dashboard.objectsList-edit',{
+      url: "/:classUid/objects/:objectUid/edit",
+      resolve: {
+        currentClass : classSchemaResolvers().currentClass,
+        currentObject : objectResolver().currentObject
+      },
+      controller: 'objectEditCtrl',
+      templateUrl: '/partials/objects.html'
     })
    
     
@@ -120,6 +129,26 @@ kingsapp.config([
         }]
       }
     }
+
+
+    function objectResolver(){
+      console.log('Object Resolver');
+      return {
+        currentObject:[
+          'dataService',
+          '$stateParams',
+          function(dataService, $stateParams){
+            return dataService.getCurrentObject({
+              options : {
+                classUid : $stateParams.classUid,
+                objectUid : $stateParams.objectUid
+              }
+            })
+          }
+        ]
+      }
+    }
+
 }]);
 
 kingsapp.run([
