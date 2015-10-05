@@ -6,7 +6,8 @@ angular.module('kings-app.auth', ['kings-app.providers'])
   '$state',
   'alertService',
   'utilsService',
-  function($scope, dataService, menus, $state, Alert, Utils) {
+  'appCache',
+  function($scope, dataService, menus, $state, Alert, Utils, appCache) {
     $scope.loaderStatus = false;
 
     //If user is present redirect to dashboard
@@ -37,6 +38,7 @@ angular.module('kings-app.auth', ['kings-app.providers'])
     function _initUser(){
       dataService.getUser()
       .then(function(user){
+        appCache.put('user',user.data.user);
         navigateToList();
       });
     }

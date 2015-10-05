@@ -9,6 +9,11 @@ var kingsapp = angular.module('kingsapp', [
      'global-directives'
     ]);
 
+/* Application cache */
+kingsapp.factory('appCache', ['$cacheFactory', function($cacheFactory) {
+  return $cacheFactory('app-cache');
+}]);
+
 kingsapp.config([
   '$stateProvider',
   '$urlRouterProvider',
@@ -92,11 +97,12 @@ kingsapp.config([
       return {
         user : [
         'dataService',
-        function(dataService){
+        'appCache',
+        function(dataService, appCache){
           dataService.setHeader({
             application_api_key : dataService.getAppConfig().api_key
           })
-          return dataService.getUser();
+          return appCache.get('user') || dataService.getUser();
         }]
       }
     }
@@ -186,12 +192,12 @@ kingsapp.controller('baseCtrl', [
     $scope.showAddButton =false;
 
     Relay.onRecieve('user', function(e, data){
-        if(data.data.user){
-            $scope.loggedIn = true;            
-            $scope.loaderStatus = false;          
-        }else{
-          $scope.showAddButton =false;
-        }
+      if(data){
+        $scope.loggedIn = true;            
+        $scope.loaderStatus = false;          
+      }else{
+        $scope.showAddButton =false;
+      }
     });
     
     Relay.onRecieve('show-add-button', function(e, data){

@@ -19,7 +19,7 @@ angular.module('kings-app.objects',[])
       };
       
       $scope.mclass     = currentClass.data.class;
-      $scope.authtoken  = user.data.user.authtoken;
+      $scope.authtoken  = user.authtoken;
       $scope.apikey     = dataService.getAppConfig().api_key;
       $scope.apihost    = dataService.getAppConfig().apihost;
       $scope.mobject    = defaultMObject;
@@ -83,7 +83,7 @@ angular.module('kings-app.objects',[])
 
       /* Data Required for formBuilder */
       $scope.mclass     = currentClass.data.class;
-      $scope.authtoken  = user.data.user.authtoken;
+      $scope.authtoken  = user.authtoken;
       $scope.apikey     = dataService.getAppConfig().api_key;
       $scope.apihost    = dataService.getAppConfig().apihost;
       $scope.mobject    = currentObject.data.object;
