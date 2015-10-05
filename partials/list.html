@@ -1,50 +1,50 @@
  <div class="main-container">
-        <!-- <button class="btn btn-primary btn-raised pull-left" ng-click="changeToCreateState()" btn-loader="loaderStatus" loading-text="Adding new..."><span class="js-btn-text ">Add new</span></button> -->
-        <div class="col-md-12 custom-pagination clearfix">
-            <h4 class="pull-left">showing <b>{{currentCount}}</b> of <b>{{totalCount}}</b></h4>
-            <ul class="pagination pull-right">
-                <li ng-class="{'disabled':currentPage==1}" ng-click="prevList()"><a href="javascript:void(0)">«</a></li>
-                <!-- <li class="active"><a href="javascript:void(0)">1</a></li>
-                <li><a href="javascript:void(0)">2</a></li>
-                <li><a href="javascript:void(0)">3</a></li>
-                <li><a href="javascript:void(0)">4</a></li>
-                <li><a href="javascript:void(0)">5</a></li> -->
-                <li ng-class="{'disabled':limitReached}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
-            </ul>
-        </div>
-        <table class="table table-hover ">
-            <thead>
-            <tr>
-                <th ng-repeat="column in columnData">{{column.name}}</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="details in newLists track by $index">
-                <td ng-repeat="column in columnData track by $index">{{details[column.id]}}</td>
-                <td>
-                    <span title="{{act}}" rel="tooltip" data-placement="bottom" ng-repeat='act in actions' ng-click='action(act, details)' class="hand icon-preview" ng-class="{'mdi-editor-mode-edit' : act == 'edit', 'mdi-action-delete' : act == 'delete'}"></span>
-                </td>
-                <div class="modal" modal="showModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">×</button>
-                                <h4 class="modal-title">Modal title</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">No</button>
-                                <button type="button" class="btn btn-primary" ng-click="ok()">Yes</button>
-                            </div>
+    <div class="col-md-12 custom-pagination clearfix" ng-show="newLists.length">
+        <h5 class="pull-left"><i>Showing</i> <b>{{currentCount}}</b> <i>of</i> <b>{{totalCount}}</b> <i>objects</i></h5>
+        <ul class="pagination pull-right">
+            <li>
+                <select class="form-control page-selector" id="js-pagination-select">
+                     <option ng-repeat="page in pages" value="{{page}}" ng-selected="page==currentPage" >{{page}}</option>
+                </select>
+            </li>
+            <li ng-class="{'disabled':currentPage==1}" ng-click="prevList()"><a href="javascript:void(0)">«</a></li>
+            <li ng-class="{'disabled':skip >= totalCount || limitReached}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
+        </ul>
+    </div>
+    <table class="table table-hover" ng-show="newLists.length">
+        <thead>
+        <tr>
+            <th ng-repeat="column in columnData">{{column.name}}</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="details in newLists track by $index">
+            <td ng-repeat="column in columnData track by $index">{{details[column.id]}}</td>
+            <td>
+                <span title="{{act}}" rel="tooltip" data-placement="bottom" ng-repeat='act in actions' ng-click='action(act, details)' class="hand icon-preview action-elems" ng-class="{'mdi-editor-mode-edit' : act == 'edit', 'mdi-action-delete' : act == 'delete'}"></span>
+            </td>
+            <div class="modal" modal="showModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">×</button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()">No</button>
+                            <button type="button" class="btn btn-primary" ng-click="ok()">Yes</button>
                         </div>
                     </div>
                 </div>
-            </tr>
-            </tbody>
-        </table>
-
-
+            </div>
+        </tr>
+        </tbody>
+    </table>
+    <div class="col-md-12 clearfix list-loader" ng-hide="newLists.length">
+        <img src="images/list-loader.gif" />
     </div>
+</div>

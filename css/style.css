@@ -59,7 +59,10 @@
 
 /*Testing*/
 .selectedMenu {
-    background: #C0BDBD;
+    background: #009688;
+}
+.selectedMenu> a{
+    color: #fff !important;
 }
 .hand{
     cursor: pointer;
@@ -103,13 +106,20 @@
 .pagination{
     margin:0;
 }
+.pagination > li{
+    float:left;
+}
+.pagination .page-selector{
+    margin:0 12px 0 0;
+    width:40px;
+}
 .custom-pagination .badge{
     font-size: 18px;
     margin: 0 0 0 5px;
 }
 .add-entity-wrap{
     position: relative;
-    margin: 32px 5% 0 0;
+    margin: 32px 8% 0 0;
     width: 56px;
 }
 .add-entity{
@@ -117,4 +127,15 @@
     right: 0;
     /* top: 60%; */
     width: 100% !important;
+}
+.list-loader{
+    margin: 0 auto;
+    text-align: center;
+    padding: 100px 0;
+}
+.mdi-editor-mode-edit:hover, .mdi-action-delete:hover{
+    color: #009688;
+}
+.table th{
+    font-size: 14px;
 }

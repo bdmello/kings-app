@@ -5,15 +5,19 @@ angular.module('kings-app.listView', ['kings-app.providers'])
   '$http',
   'dataService',
   'relayService',
+  'utilsService',
   '$state',
   'menu',
-  function($scope, $location, $http, dataService, Relay, $state, menus) {
+  function($scope, $location, $http, dataService, Relay, Utils, $state, menus) {
     var classUid = $state.params.classUid;
     var limit = 2;
-    var skip = parseInt($state.params.skip) || 0;
     var limitCount = 0;
+    var pagSelector = $('#js-pagination-select');
 
+    $scope.pages = [];
+    $scope.skip = parseInt($state.params.skip) || 0;
     $scope.currentPage = $state.params.p || 1;
+    console.log("$scope.currentPage", $scope.currentPage);
     $scope.currentCount = 0;
     $scope.loaderStatus = false;
     $scope.limitReached = false;
@@ -27,7 +31,7 @@ angular.module('kings-app.listView', ['kings-app.providers'])
 
     //init objects in list    
     _initObjects({
-      skip : skip
+      skip : $scope.skip
     });
 
 
@@ -41,19 +45,21 @@ angular.module('kings-app.listView', ['kings-app.providers'])
 
     $scope.nxtList = function(){
      
-      if(skip >= $scope.totalCount){
+      if($scope.skip >= $scope.totalCount){
       $scope.limitReached = true
         return;
       }
 
-      skip = skip+limit;
+      $scope.skip = $scope.skip+limit;
       ++$scope.currentPage;
     
       $location.search({
         p : $scope.currentPage,
-        skip : skip
+        skip : $scope.skip
       });
     }
+
+
 
     $scope.prevList = function(){
       if($scope.currentPage === 1)
@@ -61,11 +67,11 @@ angular.module('kings-app.listView', ['kings-app.providers'])
 
 
       --$scope.currentPage;
-      skip = skip-limit;
-      console.log("skip", skip, $scope.currentPage)
+      $scope.skip = $scope.skip-limit;
+      console.log("skip", $scope.skip, $scope.currentPage)
        $location.search({
         p : $scope.currentPage,
-        skip : skip
+        skip : $scope.skip
       });
     }
     function editData(data){
@@ -108,9 +114,29 @@ angular.module('kings-app.listView', ['kings-app.providers'])
         $scope.totalCount = res.data.count;
         $scope.newLists = res.data.objects;
         $scope.currentCount = res.data.objects.length;
+        var pagesLength = Math.ceil($scope.totalCount/limit);
+        for(var i=1;i<=pagesLength;i++){
+          $scope.pages.push(i);
+        }
         limitCount = limitCount + $scope.currentCount;
       });
     }
 
+    // $scope.$watch('currentPage', function(){
+
+    // })
+
+    (function(){
+      pagSelector.on('change', function() {
+        $scope.currentPage = parseInt(this.value);
+        console.log("yo", $scope.currentPage, ($scope.currentPage - 1) * limit, this.value)
+        Utils.sa($scope, function(){
+          $location.search({
+            p : $scope.currentPage,
+            skip : ($scope.currentPage - 1) * limit
+          });
+        })
+      })
+    })()
   }
 ]);
