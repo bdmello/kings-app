@@ -1,7 +1,10 @@
 <div class="main-header">
-        <img src="images/logo.png">
-        <button class="btn btn-primary btn-flat pull-right" ng-click="signOut()" ng-show="loggedIn">
-            <i class="mdi-social-people"></i>Logout<div class="ripple-wrapper"></div>
+        <a href="#" class="main-logo"><img src="images/logo.png"></a>
+        <button btn-loader="loaderStatus" class="btn btn-primary btn-flat pull-right logout-btn" ng-click="signOut()" ng-show="loggedIn">
+            <div class="icon-preview"><i class="mdi-action-exit-to-app"></i></div>
         </button>
+        <div class="add-entity-wrap pull-right" ng-show="loggedIn">
+          <button ng-show="showAddButton" class="btn btn-primary btn-fab btn-raised mdi-content-add add-entity" ng-click="createObject()"><div class="ripple-wrapper"></div></button>
+        </div>
 </div>
 <div ui-view></div>

@@ -1,14 +1,6 @@
-angular.module('kings-app.utils', [])
-.service('Utils', [function(){
-  this.sa = function(scope, fn) {
-      if (fn)
-        (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
-      else {
-        (scope.$$phase || scope.$root.$$phase) ? '' : scope.$apply();
-      }
-    }
-}])
-.provider('builtApi', [function(){
+angular.module('kings-app.providers', [])
+
+.provider('dataService', [function(){
   //application config variable
   var appConfig = {};
   var headers = {};
@@ -43,8 +35,16 @@ angular.module('kings-app.utils', [])
       getObjects: function(args){
         var objectUrl = url+'/classes/'+args.options.classUid+'/objects';
         return $http.get(objectUrl, {
-                 headers : headers
+                 headers : headers,
+                 params : args.params
                 }); 
+      },
+      getCurrentObject: function(args){
+        console.log('args current object',args);
+        var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectUid;
+        return $http.get(objectUrl, {
+          headers : headers
+        })
       },
       retrievePassword : function(credentials){
         return  $http.post(url+'/user/forgot_password', credentials.body, {
@@ -56,8 +56,10 @@ angular.module('kings-app.utils', [])
           headers : headers
         });
       },
-      editObject: function(args){
-
+      resetAppUserPassword: function(credentials){
+        return  $http.post(url+'/application/users/forgot_password/reset_password', credentials.body, {
+          headers : headers
+        });
       },
       deleteObject: function(args){
         var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectsUid;
@@ -76,6 +78,10 @@ angular.module('kings-app.utils', [])
           headers : headers
         })
       },
+      editObject: function(args){
+        var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectUid;
+        return $http.put(objectUrl, args.body, {headers:headers});
+      },
       getClassSchema: function(args){
         var classesUrl = url+'/classes/'+args.options.classUid;
         return $http.get(classesUrl, {
@@ -84,8 +90,8 @@ angular.module('kings-app.utils', [])
       }
     };
   }];
-  
-}])
+  }
+])
 .constant('menu', [{
   id : "players",
   text : "Players",

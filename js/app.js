@@ -1,52 +1,65 @@
 var kingsapp = angular.module('kingsapp', [
     'ui.router',
     'ui.bootstrap.modal',
-    'auth',
-    'dashboard',
-    'list',
-    'objects',
-    'formBuilder'
+     'kings-app.auth',
+     'kings-app.dashboard',
+     'kings-app.listView',
+     'kings-app.objects',
+     'formBuilder'
     ]);
 
-kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', function($stateProvider, $urlRouterProvider, builtApiProvider) {
+kingsapp.config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  'dataServiceProvider',
+ function($stateProvider, $urlRouterProvider, dataServiceProvider) {
     $urlRouterProvider
-        .otherwise('/dashboard')
+        .otherwise('/login')
         .when('', '/login')
         .when('/', '/login');
 
     $stateProvider
     .state('base', {
-      //resolve:appResolvers(),
       controller: 'baseCtrl',
-      templateUrl: '/partials/base.html'
+      templateUrl: 'partials/base.html'
     })
     .state('base.login', {
       url: "/login",
-      templateUrl: '/partials/login.html',
+      templateUrl: 'partials/login.html',
       controller: 'loginCtrl'
     })
     .state('base.login-retrieve-password', {
       url: "/user/retrieve-password",
-      templateUrl: '/partials/resetPassword.html',
-      controller: 'resetCtrl'
+      templateUrl: 'partials/resetPassword.html',
+      controller: 'resetCtrl',
+      data: {}
     })
     .state('base.login-reset-password', {
-      url: "/user/reset_password_submit/:authtoken",
-      templateUrl: '/partials/resetPassword.html',
-      controller: 'resetCtrl'
+      url: "/user/reset_password_submit/:token",
+      templateUrl: 'partials/resetPassword.html',
+      controller: 'resetCtrl',
+      data: {}
+    })
+    .state('base.login-resetAppUser-password', {
+      url: '/application/users/reset_password/:token',
+      templateUrl: 'partials/resetPassword.html',
+      controller: 'resetCtrl',
+      data: {
+        appUser: true
+      }
     })
     .state('base.dashboard', {
       url: "/dashboard",
       abstract:true,
       resolve:dashboardResolvers(),
       controller: 'dashboardCtrl',
-      templateUrl: '/partials/dashboard.html'
+      templateUrl: 'partials/dashboard.html'
     })
     .state('base.dashboard.objectsList', {
-      url: "/:classUid",
+      url: "/:classUid?p&skip",
       controller: 'listCtrl',
-      resolve: listResolvers(),
-      templateUrl: '/partials/list.html'
+      //resolve: listResolvers(),
+      templateUrl: 'partials/list.html'
     })
     .state('base.dashboard.objectsList-create',{
       url: "/:classUid/create",
@@ -54,10 +67,20 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
       controller: 'objectCreateCtrl',
       templateUrl: '/partials/objects.html'
     })
+    .state('base.dashboard.objectsList-edit',{
+      url: "/:classUid/objects/:objectUid/edit",
+      resolve: {
+        currentClass : classSchemaResolvers().currentClass,
+        currentObject : objectResolver().currentObject
+      },
+      controller: 'objectEditCtrl',
+      templateUrl: '/partials/objects.html'
+    })
    
     
-    builtApiProvider.setAppConfig({
-        //url : "https://kings-backend.built.io",
+    dataServiceProvider.setAppConfig({
+        // apihost:"https://kings-backend.built.io/v1",
+        // url : "https://kings-backend.built.io",
         apihost:'http://code-bltdev.cloudthis.com/v1',
         url:window.location.protocol+'//'+ window.location.host,
         version:"/v1",
@@ -67,12 +90,12 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
     function dashboardResolvers(){
       return {
         user : [
-        'builtApi',
-        function(builtApi){
-          builtApi.setHeader({
-            application_api_key : builtApi.getAppConfig().api_key
+        'dataService',
+        function(dataService){
+          dataService.setHeader({
+            application_api_key : dataService.getAppConfig().api_key
           })
-          return builtApi.getUser();
+          return dataService.getUser();
         }]
       }
     }
@@ -80,10 +103,10 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
     function listResolvers(){
       return {
          objects: [
-        'builtApi',
+        'dataService',
         '$stateParams',
-        function(builtApi, $stateParams){
-          return builtApi.getObjects({
+        function(dataService, $stateParams){
+          return dataService.getObjects({
             options : {
               classUid : $stateParams.classUid
             }
@@ -95,10 +118,10 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
     function classSchemaResolvers(){
       return {
         currentClass:[
-        'builtApi',
+        'dataService',
         '$stateParams',
-        function(builtApi, $stateParams){
-          return builtApi.getClassSchema({
+        function(dataService, $stateParams){
+          return dataService.getClassSchema({
             options : {
               classUid : $stateParams.classUid
             }
@@ -106,208 +129,89 @@ kingsapp.config(['$stateProvider', '$urlRouterProvider', 'builtApiProvider', fun
         }]
       }
     }
+
+
+    function objectResolver(){
+      console.log('Object Resolver');
+      return {
+        currentObject:[
+          'dataService',
+          '$stateParams',
+          function(dataService, $stateParams){
+            return dataService.getCurrentObject({
+              options : {
+                classUid : $stateParams.classUid,
+                objectUid : $stateParams.objectUid
+              }
+            })
+          }
+        ]
+      }
+    }
+
 }]);
 
 kingsapp.run([
-  '$rootScope',
-  '$location',
+  'relayService',
   '$state',
-  function($rootScope, $location, $state) {
-    $rootScope.$on( "$stateChangeError", function(event, next, current) {
-       // $state.go('base.login');
-    });
-}]);
+  '$rootScope',
+  '$timeout',
+  function(Relay, $state, $rootScope, $timeout){
+    //extend Angular's scope allowing you to remove listeners
+    Relay.extendRootScope();
 
-
-
-kingsapp.controller('newPlayerController', function($scope) {
-    
-    $scope.model = {};
-
-    BuiltClass.getSchema()
-    .then(function(schema){
-        $sa($scope, function(){
-            $scope.schema = schema;
-        })
+    $rootScope.$on('$viewContentLoading', function(event, viewConfig){ 
+      if(viewConfig.view.self.name === 'base.dashboard.objectsList'){
+        $timeout(function() {
+          Relay.send('show-add-button', true);      
+        }, 100);
+        console.log("asdas")
+      }else{
+        Relay.send('show-add-button', false);      
+      }
     });
 
-    $scope.addTask = function(){
-        var Player = BuiltClass.Object;
-        var newPl = Player($scope.playerModel);
-        console.log($scope.playerModel);
-        /*newPl.save()
-        .then(function(responseObj){
-            console.log(responseObj);
-        })*/
-    }
-});
-
+}])
+      
 kingsapp.controller('baseCtrl', [
     '$scope',
     '$state',
-    'builtApi',
+    'dataService',
     '$rootScope',
-    function($scope, $state, builtApi, $rootScope) {
+    'relayService',
+    function($scope, $state, dataService, $rootScope, Relay) {
     $scope.loggedIn = false;
+    $scope.loaderStatus = false;
+    $scope.showAddButton =false;
 
-    $rootScope.$on('user', function(e, data){
+    Relay.onRecieve('user', function(e, data){
         if(data.data.user){
             $scope.loggedIn = true;            
+            $scope.loaderStatus = false;          
+        }else{
+          $scope.showAddButton =false;
         }
     });
     
+    Relay.onRecieve('show-add-button', function(e, data){
+      console.log("asdasdsa")
+        $scope.showAddButton =data;
+    });
+
+    $scope.createObject = function(){
+      Relay.send('create-object');
+    }
+
     $scope.signOut = function(){
-      builtApi.signOut()
+      $scope.loaderStatus = true;
+      dataService.signOut()
       .then(function(){
         $scope.loggedIn = false;
         $state.go('base.login', {
-          
         });
+      })
+      .finally(function(){
+        $scope.loaderStatus = false;          
       })
     }
 }]);
-
-kingsapp.directive('fieldDirective', function(){
-    return{
-        scope: {
-            schema: '=',
-            ngModel: '='
-        },
-        restrict: 'E',
-        templateUrl: 'field.html',
-        link: function(scope, el, attrs, ngModel) {
-            console.log(scope.schema);
-        }
-    }
-});
-
-kingsapp.directive('groupDirective', function(){
-    return{
-        scope: {
-            schema: '=schema',
-            ngModel: '='
-        },
-        restrict: 'E',
-        templateUrl: 'group.html',
-        link: function(scope, el, attrs, ngModel) {
-            if(scope.ngModel === undefined){
-                scope.ngModel = {};
-            }
-        }
-    }
-});
-
-kingsapp.directive('multipleDirective', function(){
-    return{
-        scope: {
-            field: '=field',
-            ngModel: '='
-        },
-        restrict: 'E',
-        templateUrl: 'multiple.html',
-        link: function(scope, el, attrs, ngModel) {
-            if(scope.ngModel === undefined){
-                scope.ngModel = [];
-            }
-        }
-    }
-});
-
-kingsapp.directive('textDirective', function(){
-    return{
-        scope: {
-            field: '=',
-            ngModel: '='
-        },
-        restrict: 'E',
-        template: '<input type="text" class="form-control" ng-model="ngModel">',
-        link: function(scope, el, attrs, ngModel) {
-            if(scope.ngModel === undefined){
-                scope.ngModel = '';
-            }
-        }
-    }
-});
-
-kingsapp.directive('booleanDirective', function(){
-    return{
-        scope: {
-            field: '=field',
-            ngModel: '='
-        },
-        restrict: 'E',
-        template: '<input type="checkbox" class="form-control" ng-model="ngModel">',
-        link: function(scope, el, attrs, ngModel) {
-            if(scope.ngModel === undefined){
-                scope.ngModel = "";
-            }
-        }
-    }
-});
-
-kingsapp.directive('numberDirective', function(){
-    return{
-        scope: {
-            field: '=field',
-            ngModel: '='
-        },
-        restrict: 'E',
-        template: '<input type="number" class="form-control" ng-model="ngModel">',
-        link: function(scope, el, attrs, ngModel) {
-            if(scope.ngModel === undefined){
-                scope.ngModel = "";
-            }
-        }
-    }
-});
-kingsapp.directive('fileDirective', function(){
-    return{
-        scope: {
-            field: '=field',
-            ngModel: '='
-        },
-        restrict: 'E',
-        template: '<input type="file" class="form-control" ng-model="ngModel">',
-        link: function(scope, el, attrs, ngModel) {
-            if(scope.ngModel === undefined){
-                scope.ngModel = "";
-            }
-        }
-    }
-});
-
-kingsapp.directive('linkDirective', function(){
-    return{
-        scope: {
-            field: '=field',
-            ngModel: '='
-        },
-        restrict: 'E',
-        template: '<input type="text" class="form-control" ng-model="ngModel.title"> <input type="url" class="form-control" ng-model="ngModel.link">',
-        link: function(scope, el, attrs, ngModel) {
-            if(scope.ngModel === undefined){
-                scope.ngModel = {
-                    "title": "",
-                    "link": ""
-                }
-            }
-        }
-    }
-});
-
-kingsapp.directive('dateDirective', function(){
-    return{
-        scope: {
-            field: '=field',
-            ngModel: '='
-        },
-        restrict: 'E',
-        template: '<input type="date" class="form-control" ng-model="ngModel">',
-        link: function(scope, el, attrs, ngModel) {
-            if(scope.ngModel === undefined){
-                scope.ngModel = "";
-            }
-        }
-    }
-});
-

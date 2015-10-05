@@ -3,7 +3,9 @@
         <div class="well bs-component">
             <form class="form-horizontal" ng-submit="signIn()">
                 <fieldset>
-                    <legend>Login</legend>
+                    <legend>
+                        <div class="icon-preview"><i class="mdi-action-lock"></i></div>
+                        Login to your account</legend>
                     <div class="form-group">
                         <div class="col-lg-10">
                             <input type="email" ng-model="email" class="form-control floating-label" id="focusedInput" placeholder="Email" required name="email" autofocus>
@@ -15,8 +17,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-2">
-                            <button type="submit" class="btn btn-info">Login</button>
+                        <div class="col-lg-10">
+                            <button type="submit" class="btn btn-info" btn-loader="loaderStatus" loading-text="Logging in..."><span class="js-btn-text ">Login</span></button>
                         </div>
                     </div>
                 </fieldset>
