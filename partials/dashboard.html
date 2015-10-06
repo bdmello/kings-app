@@ -1,12 +1,7 @@
 <div id="player-list">
     <div class="aside">
-        <div class="class" ng-repeat="menu in menus" ui-sref-active="selectedMenu" >
+        <div class="class" ng-repeat="menu in menus" ui-sref-active="selectedMenu">
           <a ui-sref="base.dashboard.objectsList({ classUid:menu.id })">{{menu.text}}</a></div>
-        <!--
-        <div class="class" ng-class="menu.id===selectedClassId ? 'selectedMenu' : '' ">
-          <a href="">Execute Flow</a>
-        </div>
-        -->
     </div>
     <div ui-view></div>
 </div>
