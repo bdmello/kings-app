@@ -129,13 +129,39 @@ angular.module('kings-app.providers', [])
   text: "Transportation"
 },{
   text:"At The Game",
-  id:"at_the_game"
+  id:"at_the_game",
+  columns: [{
+    name : "Uid",
+    id : "uid"
+  }]
 },
 {
   text:"Home Feeds",
-  id:"home_feeds"
+  id:"home_feeds",
+  columns : [{
+    name: "Title",
+    id: "title"
+  },{
+    name: "Author",
+    id: "author"
+  },{
+    name: "Source",
+    id: "source"
+  }]
 },
 {
   text:"Ads",
-  id:"ads"
+  id:"ads",
+  columns:[{
+    name:"Image Url",
+    id:"image_url"
+  },{
+    name:"Action Url",
+    id:"action_url"
+  },{
+    name: "Track Analytic",
+    id:"track_analytic"
+  },{
+
+  }]
 }])
