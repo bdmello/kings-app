@@ -126,7 +126,11 @@ angular.module('kings-app.providers', [])
   singleton : true
 },{
   id : "transportation",
-  text: "Transportation"
+  text: "Transportation",
+  columns:[{
+    name: "Uid",
+    id: "uid"
+  }]
 },{
   text:"At The Game",
   id:"at_the_game",
