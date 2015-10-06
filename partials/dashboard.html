@@ -1,7 +1,7 @@
 <div id="player-list">
     <div class="aside">
         <div class="class" ng-repeat="menu in menus" ui-sref-active="selectedMenu">
-          <a  ui-sref="base.dashboard.objectsList({ classUid:menu.id })">{{menu.text}}
+          <a  ui-sref="base.dashboard.objectsList({ classUid:menu.id,p:1,skip:0,filter:'' })">{{menu.text}}
             <div class="ripple-wrapper"></div>
           </a></div>
     </div>
