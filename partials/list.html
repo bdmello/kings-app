@@ -1,5 +1,5 @@
  <div class="main-container">
-    <div class="col-md-12 custom-pagination clearfix" ng-show="newLists.length">
+    <div class="col-md-12 custom-pagination clearfix">
         <h5 class="pull-left"><i>Showing</i> <b>{{currentCount}}</b> <i>of</i> <b>{{totalCount}}</b> <i>objects</i></h5>
         <ul class="pagination pull-right">
             <li>
@@ -11,15 +11,15 @@
             <li ng-class="{'disabled':skip >= totalCount || limitReached}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
         </ul>
     </div>
-    <table class="table table-hover" ng-show="newLists.length">
+    <table class="table table-hover" >
         <thead>
         <tr>
             <th ng-repeat="column in columnData">{{column.name}}</th>
             <th>Actions</th>
         </tr>
         </thead>
-        <tbody>
-        <tr ng-repeat="details in newLists track by $index">
+        <tbody ng-show="newLists.length">
+          <tr ng-repeat="details in newLists track by $index">
             <td ng-repeat="column in columnData track by $index">{{details[column.id]}}</td>
             <td>
                 <span title="{{act}}" rel="tooltip" data-placement="bottom" ng-repeat='act in actions' ng-click='action(act, details)' class="hand icon-preview action-elems" ng-class="{'mdi-editor-mode-edit' : act == 'edit', 'mdi-action-delete' : act == 'delete'}"></span>
@@ -41,10 +41,13 @@
                     </div>
                 </div>
             </div>
-        </tr>
+          </tr>
         </tbody>
     </table>
-    <div class="col-md-12 clearfix list-loader" ng-hide="newLists.length">
-        <img src="images/list-loader.gif" />
+    <div class="col-md-12 clearfix list-loader" ng-hide="newLists.length > 0">
+      <img src="images/list-loader.gif" ng-hide="fetchComplete" />
+      <div ng-if="newLists.length == 0" ng-show="fetchComplete" >
+        <p>No Data</p>
+      </div>
     </div>
 </div>

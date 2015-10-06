@@ -110,10 +110,21 @@ angular.module('kings-app.providers', [])
   }]
 },{
   id : "coach",
-  text : "Coaches"
+  text : "Coaches",
+  columns: [{
+    name : "Coach Name",
+    id : "name"
+  },{
+    name : "Coach Type",
+    id : "coach_type"
+  },{
+    name : "College",
+    id : "college"
+  }]
 },{
   id : "config",
-  text : "Config"
+  text : "Config",
+  singleton : true
 },{
   id : "transportation",
   text: "Transportation"
