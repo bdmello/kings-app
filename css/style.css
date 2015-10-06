@@ -6,9 +6,9 @@
     margin: 0 auto;
 }
 
-#player-list{
+/*#player-list{
     background: #ffffff;
-}
+}*/
 .main-header{
     padding: 15px;
     box-shadow: 0 2px 2px rgba(0,0,0,.2);
@@ -29,7 +29,8 @@
 .main-container {
     margin-left: 200px;
     margin-top: 75px;
-    padding: 15px;
+    background: #ffffff;
+    padding: 10px;
 }
 .main-container .table{
     border-top: 1px solid #EEEEEE;
@@ -147,4 +148,23 @@
     padding: 0;
     float:left;
     margin: 3px 10px 0 0;
+}
+.breadcrumb{
+    display: none;
+}
+.asset-gallery-view .btn-refresh{
+    margin-right: 10px;
+    
+}
+.nav-tabs{
+    background:none;
+}
+.nav-tabs>li>a{
+    color:#ccc !important;
+}
+.nav-tabs>li>a:hover,.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+    color:#41424a !important;
+}
+.header-icon, .button-icon{
+        padding: 10px 0 0 0 !important;
 }
