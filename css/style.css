@@ -167,14 +167,21 @@
     color:#41424a !important;
 }
 .header-icon, .button-icon{
-        padding: 10px 0 0 0 !important;
+        padding: 8px 0 0 0 !important;
 }
 
 /* formBuilder Button */
 .btn.btn-sm {
   padding: 10px 15px;
 }
-
+.form-builder-wrap{
+    border-top: solid 2px #ccc; 
+    padding-top:15px;
+    margin-top:10px;
+}
 .form-builder-wrap .btn-group{
   box-shadow:none;
+}
+.form-horizontal .checkbox{
+    padding: 9px 0 0 22px;
 }
