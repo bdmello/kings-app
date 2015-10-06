@@ -30,7 +30,7 @@
     margin-left: 200px;
     margin-top: 75px;
     background: #ffffff;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
 }
 .main-container .table{
     border-top: 1px solid #EEEEEE;
@@ -132,6 +132,7 @@
     right: 0;
     /* top: 60%; */
     width: 100% !important;
+    box-shadow: 0 2px 2px rgba(0,0,0,.3) !important;
 }
 .list-loader{
     margin: 0 auto;
@@ -166,19 +167,28 @@
     color:#41424a !important;
 }
 .header-icon, .button-icon{
-        padding: 10px 0 0 0 !important;
+        padding: 8px 0 0 0 !important;
 }
 
 /* formBuilder Button */
 .btn.btn-sm {
   padding: 10px 15px;
 }
-
+.form-builder-wrap{
+    border-top: solid 2px #ccc; 
+    border-bottom: solid 2px #ccc; 
+    padding-top:15px;
+    padding-bottom:15px;
+    margin-top:10px;
+}
 .form-builder-wrap .btn-group{
   box-shadow:none;
 }
-
 .button-wrap{
   clear: both;
   height: 50px;
+}
+
+.form-horizontal .checkbox{
+    padding: 9px 0 0 22px;
 }
