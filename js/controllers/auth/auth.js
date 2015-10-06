@@ -1,4 +1,4 @@
-angular.module('kings-app.auth', ['kings-app.providers', 'kings-app.directives'])
+angular.module('kings-app.auth', ['kings-app.providers'])
 .controller('loginCtrl', [
   '$scope',
   'dataService',

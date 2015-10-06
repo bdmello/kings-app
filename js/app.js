@@ -5,7 +5,8 @@ var kingsapp = angular.module('kingsapp', [
      'kings-app.dashboard',
      'kings-app.listView',
      'kings-app.objects',
-     'formBuilder'
+     'formBuilder',
+     'global-directives'
     ]);
 
 /* Application cache */
@@ -61,7 +62,7 @@ kingsapp.config([
       templateUrl: 'partials/dashboard.html'
     })
     .state('base.dashboard.objectsList', {
-      url: "/:classUid?p&skip",
+      url: "/:classUid?p&skip&filter",
       controller: 'listCtrl',
       //resolve: listResolvers(),
       templateUrl: 'partials/list.html'
@@ -166,7 +167,8 @@ kingsapp.run([
     //extend Angular's scope allowing you to remove listeners
     Relay.extendRootScope();
 
-    $rootScope.$on('$viewContentLoading', function(event, viewConfig){ 
+    $rootScope.$on('$viewContentLoading', function(event, viewConfig){
+      console.log("view on content loading"); 
       if(viewConfig.view.self.name === 'base.dashboard.objectsList'){
         $timeout(function() {
           Relay.send('show-add-button', true);      
@@ -177,6 +179,11 @@ kingsapp.run([
       }
     });
 
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+       if(error.data.error_code){
+        $state.go('base.login') 
+       }
+    });
 }])
       
 kingsapp.controller('baseCtrl', [

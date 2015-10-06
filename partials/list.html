@@ -1,15 +1,16 @@
  <div class="main-container">
     <div class="col-md-12 custom-pagination clearfix">
-        <h5 class="pull-left"><i>Showing</i> <b>{{currentCount}}</b> <i>of</i> <b>{{totalCount}}</b> <i>objects</i></h5>
+        <div search-entity search-text="searchText"></div>
         <ul class="pagination pull-right">
             <li>
                 <select class="form-control page-selector" id="js-pagination-select">
-                     <option ng-repeat="page in pages" value="{{page}}" ng-selected="page==currentPage" >{{page}}</option>
+                     <option ng-repeat="page in pages track by $index" value="{{page}}" ng-selected="page==currentPage" >{{page}}</option>
                 </select>
             </li>
             <li ng-class="{'disabled':currentPage==1}" ng-click="prevList()"><a href="javascript:void(0)">«</a></li>
             <li ng-class="{'disabled':skip >= totalCount || limitReached}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
         </ul>
+        <h6 class="pull-right"><i>Showing</i> <b>{{currentCount}}</b> <i>of</i> <b>{{totalCount}}</b> <i>objects</i></h6>
     </div>
     <table class="table table-hover" >
         <thead>

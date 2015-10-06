@@ -17,8 +17,9 @@ angular.module('kings-app.listView', ['kings-app.providers'])
 
     $scope.pages = [];
     $scope.skip = parseInt($state.params.skip) || 0;
+    $scope.searchText = $state.params.filter || "";
     $scope.currentPage = $state.params.p || 1;
-    console.log("$scope.currentPage", $scope.currentPage);
+    //console.log("$scope.currentPage", $scope.currentPage);
     $scope.currentCount = 0;
     $scope.loaderStatus = false;
     $scope.limitReached = false;
@@ -83,6 +84,16 @@ angular.module('kings-app.listView', ['kings-app.providers'])
       });
     }
 
+    Relay.onRecieve('search-entity', function(e, data){
+      console.log("search-entity", data);
+      Utils.sa($scope, function(){
+       $location.search({
+          p : 1,
+          skip : 0,
+          filter: data
+        });
+      })  
+    });
     function goToEditState(data){
       console.log('data',data);
       console.log('stateparams',$state.params);
@@ -113,9 +124,11 @@ angular.module('kings-app.listView', ['kings-app.providers'])
       $state.go('base.dashboard.objectsList-create',$state.params);        
     });
 
+
+
     function _initObjects(params){
       
-      dataService.getObjects({
+      var queryObject = {
         options : {
           classUid : classUid
         },
@@ -125,7 +138,13 @@ angular.module('kings-app.listView', ['kings-app.providers'])
           include_count: true,
           include_unpublished : true
         }
-      }).then(function(res){
+      };
+
+      if($scope.searchText){
+        queryObject.params.typeahead = $scope.searchText;
+      }
+
+      dataService.getObjects(queryObject).then(function(res){
         $scope.totalCount = res.data.count;
 
         /* redirect if class is singleton */
