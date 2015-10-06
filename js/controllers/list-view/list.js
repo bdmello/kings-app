@@ -10,6 +10,7 @@ angular.module('kings-app.listView', ['kings-app.providers'])
   'menu',
   function($scope, $location, $http, dataService, Relay, Utils, $state, menus) {
     var classUid = $state.params.classUid;
+
     var limit = 2;
     var limitCount = 0;
     var pagSelector = $('#js-pagination-select');
@@ -25,9 +26,16 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     $scope.totalCount = 0;
     $scope.newLists = [];
     $scope.actions = ['edit', 'delete'];
+    $scope.fetchComplete = false;
+    $scope.singletonClass = false;
     $scope.columnData = menus.filter(function(menu){
-      if(menu.id === classUid)
+      if(menu.id === classUid){
+        /* Check for singleton Class*/
+        if(menu.singleton){
+          $scope.singletonClass = true;
+        }
         return menu;
+      }
     })[0].columns;
 
     //init objects in list    
@@ -138,13 +146,27 @@ angular.module('kings-app.listView', ['kings-app.providers'])
 
       dataService.getObjects(queryObject).then(function(res){
         $scope.totalCount = res.data.count;
-        $scope.newLists = res.data.objects;
+
+        /* redirect if class is singleton */
+        if($scope.singletonClass && res.data.objects.length){
+          $state.go('base.dashboard.objectsList-edit', {
+            classUid : classUid,
+            objectUid : res.data.objects[0].uid
+          })
+        } else {
+          /* Set newList */
+          $scope.newLists = res.data.objects;
+        }
+
         $scope.currentCount = res.data.objects.length;
+        $scope.fetchComplete = true;
         var pagesLength = Math.ceil($scope.totalCount/limit);
         for(var i=1;i<=pagesLength;i++){
           $scope.pages.push(i);
         }
         limitCount = limitCount + $scope.currentCount;
+      }, function(){
+        $scope.fetchComplete = true;
       });
     }
 
