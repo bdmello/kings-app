@@ -150,10 +150,12 @@ angular.module('kings-app.listView', ['kings-app.providers'])
             classUid : classUid,
             objectUid : res.data.objects[0].uid
           })
+          return;
+        }else{
+          /* Set newList */
+          $scope.newLists = res.data.objects;
         }
         
-        /* Set newList */
-        $scope.newLists = res.data.objects;
         $scope.currentCount = res.data.objects.length;
         $scope.fetchComplete = true;
         var pagesLength = Math.ceil($scope.totalCount/limit);

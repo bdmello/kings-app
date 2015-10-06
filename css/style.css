@@ -31,6 +31,7 @@
     margin-top: 75px;
     background: #ffffff;
     padding: 10px 10px 0 10px;
+    min-height: 293px;
 }
 .main-container .table{
     border-top: 1px solid #EEEEEE;
@@ -196,3 +197,12 @@
 .btn{
     font-size: 14px;
 }
+.no-data{
+  font-size: 18px;
+  color:#ccc;
+  font-weight: bold;
+}
+.table tbody tr{
+  background-color: #fcfcfc;
+}
+
