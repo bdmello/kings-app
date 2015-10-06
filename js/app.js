@@ -180,7 +180,7 @@ kingsapp.run([
     });
 
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-       if(error.data.error_code){
+       if(error.data && error.data.error_code){
         $state.go('base.login') 
        }
     });

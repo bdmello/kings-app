@@ -177,3 +177,8 @@
 .form-builder-wrap .btn-group{
   box-shadow:none;
 }
+
+.button-wrap{
+  clear: both;
+  height: 50px;
+}

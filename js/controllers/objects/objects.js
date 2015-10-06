@@ -79,7 +79,8 @@ angular.module('kings-app.objects',[])
     'dataService',
     'alertService',
     'utilsService',
-    function($scope, $state, user, currentClass, currentObject, dataService, Alert, Utils){
+    'menu',
+    function($scope, $state, user, currentClass, currentObject, dataService, Alert, Utils, menus){
 
       /* Data Required for formBuilder */
       $scope.mclass     = currentClass.data.class;
@@ -87,9 +88,17 @@ angular.module('kings-app.objects',[])
       $scope.apikey     = dataService.getAppConfig().api_key;
       $scope.apihost    = dataService.getAppConfig().apihost;
       $scope.mobject    = currentObject.data.object;
+      $scope.singleton  = false;
 
       var objectUid = $scope.mobject.uid;
       var classUid  = $state.params.classUid;
+
+      //Check for singleton class
+      menus.forEach(function(menu){
+        if(menu.id === classUid && menu.singleton){
+          $scope.singleton = true;
+        }
+      })
 
       /* Save existing object */
       $scope.saveObject = function(){

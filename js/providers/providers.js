@@ -123,7 +123,11 @@ angular.module('kings-app.providers', [])
 },{
   id : "config",
   text : "Config",
-  singleton : true
+  singleton : true,
+  columns:[{
+    name:"Uid",
+    id: "uid"
+  }]
 },{
   id : "transportation",
   text: "Transportation",

@@ -36,11 +36,14 @@ angular.module('kings-app.auth', ['kings-app.providers'])
     }
 
     function _initUser(){
+      $scope.loaderStatus = true;
       dataService.getUser()
       .then(function(user){
         appCache.put('user',user.data.user);
         navigateToList();
-      });
+      }, function(error){
+        $scope.loaderStatus = false;
+      })
     }
 
    function navigateToList(){
