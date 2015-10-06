@@ -68,7 +68,6 @@ angular.module('kings-app.auth', ['kings-app.providers'])
     $scope.loaderStatus = false;
     $scope.appUser = $state.current.data.appUser;
     
-    console.log("if app user", $scope.appUser)
     $scope.retrievePassword = function(userDetail){
       $scope.loaderStatus = true;
       dataService.retrievePassword({

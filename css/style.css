@@ -99,6 +99,7 @@
     font-size: 32px;
 }
 .custom-pagination{
+    padding-left: 0;
     margin: 10px 0;
 }
 .custom-pagination h4{
@@ -175,8 +176,8 @@
   padding: 10px 15px;
 }
 .form-builder-wrap{
-    border-top: solid 2px #ccc; 
-    border-bottom: solid 2px #ccc; 
+    border-top: solid 2px #eee; 
+    border-bottom: solid 2px #eee; 
     padding-top:15px;
     padding-bottom:15px;
     margin-top:10px;
@@ -191,4 +192,7 @@
 
 .form-horizontal .checkbox{
     padding: 9px 0 0 22px;
+}
+.btn{
+    font-size: 14px;
 }

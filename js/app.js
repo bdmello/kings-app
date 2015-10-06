@@ -68,13 +68,13 @@ kingsapp.config([
       templateUrl: 'partials/list.html'
     })
     .state('base.dashboard.objectsList-create',{
-      url: "/:classUid/create",
+      url: "/:classUid/create?p&skip&filter",
       resolve: classSchemaResolvers(),
       controller: 'objectCreateCtrl',
       templateUrl: '/partials/objects.html'
     })
     .state('base.dashboard.objectsList-edit',{
-      url: "/:classUid/objects/:objectUid/edit",
+      url: "/:classUid/objects/:objectUid/edit?p&skip&filter",
       resolve: {
         currentClass : classSchemaResolvers().currentClass,
         currentObject : objectResolver().currentObject
@@ -139,7 +139,6 @@ kingsapp.config([
 
 
     function objectResolver(){
-      console.log('Object Resolver');
       return {
         currentObject:[
           'dataService',
@@ -168,14 +167,21 @@ kingsapp.run([
     Relay.extendRootScope();
 
     $rootScope.$on('$viewContentLoading', function(event, viewConfig){
-      console.log("view on content loading"); 
       if(viewConfig.view.self.name === 'base.dashboard.objectsList'){
         $timeout(function() {
-          Relay.send('show-add-button', true);      
+          Relay.send('show-add-button', true);
+          //Relay.send('set-menu', true);      
         }, 100);
-        console.log("asdas")
       }else{
         Relay.send('show-add-button', false);      
+      }
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function(){
+      if($state.is('base.dashboard.objectsList')){
+        $timeout(function() {
+          Relay.send('set-menu', $state.params);      
+        }, 100);
       }
     });
 
@@ -207,7 +213,6 @@ kingsapp.controller('baseCtrl', [
     });
     
     Relay.onRecieve('show-add-button', function(e, data){
-      console.log("asdasdsa")
         $scope.showAddButton =data;
     });
 

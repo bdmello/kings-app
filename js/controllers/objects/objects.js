@@ -37,16 +37,12 @@ angular.module('kings-app.objects',[])
           }
         })
         .success(function(data, status, headers, config){
-          
-          console.log('Data', data)
-          console.log('Status', status);
-
           Alert.notify({
             title: data.notice,
             content: 'Success',
             type: 'success'
           });
-          gotoPreviousState($state);
+          NavigateState();
         })
         .error(function(data, status, headers, config){
           
@@ -56,7 +52,7 @@ angular.module('kings-app.objects',[])
             type: 'error'
           });
 
-          gotoPreviousState($state);
+          NavigateState();
         });
       }
 
@@ -65,9 +61,23 @@ angular.module('kings-app.objects',[])
         gotoPreviousState($state);
       }
 
+      function NavigateState(){
+        $state.go('base.dashboard.objectsList', {
+          p : 1,
+          skip: 0,
+          filter:"",
+          classUid : classUid
+        });
+      }
+
       /* Goto Previous State */
-      function gotoPreviousState(state){
-        state.go('base.dashboard.objectsList', state.params);
+      function gotoPreviousState(){
+        $state.go('base.dashboard.objectsList', {
+          p : $state.params.p,
+          skip: $state.params.skip,
+          filter:$state.params.filter,
+          classUid : classUid
+        });
       }
   }])
   .controller('objectEditCtrl',[
@@ -114,8 +124,6 @@ angular.module('kings-app.objects',[])
           }
         })
         .success(function(data, status, headers, config){
-
-          console.log('Utils', Utils);
           Alert.notify({
             title: data.notice,
             content: 'Success',

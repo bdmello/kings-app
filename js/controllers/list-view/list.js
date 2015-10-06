@@ -19,7 +19,6 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     $scope.skip = parseInt($state.params.skip) || 0;
     $scope.searchText = $state.params.filter || "";
     $scope.currentPage = $state.params.p || 1;
-    //console.log("$scope.currentPage", $scope.currentPage);
     $scope.currentCount = 0;
     $scope.loaderStatus = false;
     $scope.limitReached = false;
@@ -77,7 +76,6 @@ angular.module('kings-app.listView', ['kings-app.providers'])
 
       --$scope.currentPage;
       $scope.skip = $scope.skip-limit;
-      console.log("skip", $scope.skip, $scope.currentPage)
        $location.search({
         p : $scope.currentPage,
         skip : $scope.skip
@@ -85,7 +83,6 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     }
 
     Relay.onRecieve('search-entity', function(e, data){
-      console.log("search-entity", data);
       Utils.sa($scope, function(){
        $location.search({
           p : 1,
@@ -95,11 +92,12 @@ angular.module('kings-app.listView', ['kings-app.providers'])
       })  
     });
     function goToEditState(data){
-      console.log('data',data);
-      console.log('stateparams',$state.params);
       var data = {
         classUid: $state.params.classUid,
-        objectUid: data.uid
+        objectUid: data.uid,
+        p: 1,
+        skip: 0,
+        filter: ''
       }
       $state.go('base.dashboard.objectsList-edit', data);
     }
@@ -112,7 +110,6 @@ angular.module('kings-app.listView', ['kings-app.providers'])
             objectsUid: data.uid
           }
         }).then(function(res){
-          console.log("res");
           $scope.newLists.splice($scope.newLists.indexOf(data), 1);
         })
       }
@@ -176,7 +173,6 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     (function(){
       pagSelector.on('change', function() {
         $scope.currentPage = parseInt(this.value);
-        console.log("yo", $scope.currentPage, ($scope.currentPage - 1) * limit, this.value)
         Utils.sa($scope, function(){
           $location.search({
             p : $scope.currentPage,
