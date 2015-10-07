@@ -61,7 +61,7 @@
 
 /*Testing*/
 .selectedMenu {
-    background: #31144e; /* #009688; */
+    background: #31144e; /*#009688; */
 }
 .selectedMenu> a{
     color: #fff !important;
@@ -229,7 +229,11 @@
   padding: 10px 10px 10px 20px;
 }
 
-/**/
+/* Purple color */
 .app-pri-color{
-  color:#31144e;
+  color:#31144e !important;
+}
+
+.app-pri-bg{
+  background:#31144e !important; 
 }
