@@ -85,17 +85,16 @@ kingsapp.config([
    
     
     dataServiceProvider.setAppConfig({
-        /*Prod*/
-        // apihost:"https://kings-backend.built.io/v1",
-        // url : "https://kings-backend.built.io",
-        /*Dev*/
-        // url : "http://code-bltdev.cloudthis.com",
-        apihost:'http://code-bltdev.cloudthis.com/v1',
+       /*Prod*/
+       apihost:window.location.protocol+'//'+ window.location.host+'/v1',
+       //url : "https://kings-backend.built.io",
+       /*Dev*/
+       //url : "http://code-bltdev.cloudthis.com",
+       //apihost:'http://code-bltdev.cloudthis.com/v1',
 
-        url:window.location.protocol+'//'+ window.location.host,
-
-        version:"/v1",
-        api_key : "bltbfb51fc159335dd8"
+       url:window.location.protocol+'//'+ window.location.host,
+       version:"/v1",
+       api_key : "bltbfb51fc159335dd8"
     })
 
     function dashboardResolvers(){

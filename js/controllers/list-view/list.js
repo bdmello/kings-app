@@ -11,7 +11,7 @@ angular.module('kings-app.listView', ['kings-app.providers'])
   function($scope, $location, $http, dataService, Relay, Utils, $state, menus) {
     var classUid = $state.params.classUid;
 
-    var limit = 50;
+    var limit = 5;
     var limitCount = 0;
     var pagSelector = $('#js-pagination-select');
 
@@ -27,6 +27,9 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     $scope.actions = ['edit', 'delete'];
     $scope.fetchComplete = false;
     $scope.singletonClass = false;
+    $scope.maxLimit = 0;
+    $scope.minLimit = 0;
+
     $scope.columnData = menus.filter(function(menu){
       if(menu.id === classUid){
         /* Check for singleton Class*/
@@ -52,12 +55,10 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     }
 
     $scope.nxtList = function(){
-     
-      if($scope.skip >= $scope.totalCount){
-      $scope.limitReached = true
-        return;
-      }
 
+      if($scope.totalCount==$scope.maxLimit)
+        return;
+      
       $scope.skip = $scope.skip+limit;
       ++$scope.currentPage;
     
@@ -111,6 +112,9 @@ angular.module('kings-app.listView', ['kings-app.providers'])
           }
         }).then(function(res){
           $scope.newLists.splice($scope.newLists.indexOf(data), 1);
+          console.log('New List', $scope.newLists);
+          $scope.totalCount -= 1;
+          updatePageCounter();
         })
       }
     }
@@ -156,13 +160,9 @@ angular.module('kings-app.listView', ['kings-app.providers'])
           $scope.newLists = res.data.objects;
         }
         
-        $scope.currentCount = res.data.objects.length;
+        
+        updatePageCounter();
         $scope.fetchComplete = true;
-        var pagesLength = Math.ceil($scope.totalCount/limit);
-        for(var i=1;i<=pagesLength;i++){
-          $scope.pages.push(i);
-        }
-        limitCount = limitCount + $scope.currentCount;
       }, function(){
         $scope.fetchComplete = true;
       });
@@ -171,6 +171,21 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     // $scope.$watch('currentPage', function(){
 
     // })
+    
+    /* Update min-max counter in pagination controll */
+    function updatePageCounter(){
+      Utils.sa($scope, function(){
+        $scope.currentCount = $scope.newLists.length;
+        var maxLimit = $scope.currentPage * limit;
+        $scope.maxLimit = maxLimit > $scope.currentCount ? $scope.currentCount : maxLimit;
+        $scope.minLimit = $scope.currentCount > 0 ? maxLimit - limit + 1 : 0;
+        var pagesLength = Math.ceil($scope.totalCount/limit);
+        for(var i=1;i<=pagesLength;i++){
+          $scope.pages.push(i);
+        }
+        limitCount = limitCount + $scope.currentCount;
+      });
+    }
 
     (function(){
       pagSelector.on('change', function() {

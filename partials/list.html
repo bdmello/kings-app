@@ -8,9 +8,9 @@
                 </select>
             </li>
             <li ng-class="{'disabled':currentPage==1}" ng-click="prevList()"><a href="javascript:void(0)">«</a></li>
-            <li ng-class="{'disabled':skip >= totalCount || limitReached}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
+            <li ng-class="{'disabled':totalCount==maxLimit}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
         </ul>
-        <h6 class="pull-right"><i>Showing</i> <b>{{currentCount}}</b> <i>of</i> <b>{{totalCount}}</b> <i>objects</i></h6>
+        <h6 class="pull-right"><i>Showing</i> <b>{{minLimit}}</b> to <b>{{maxLimit}}</b> <i>of</i> <b>{{totalCount}}</b> <i>objects</i></h6>
     </div>
     <table class="table table-hover" ng-show="newLists.length > 0">
         <thead>
