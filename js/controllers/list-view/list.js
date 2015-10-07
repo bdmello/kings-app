@@ -11,7 +11,7 @@ angular.module('kings-app.listView', ['kings-app.providers'])
   function($scope, $location, $http, dataService, Relay, Utils, $state, menus) {
     var classUid = $state.params.classUid;
 
-    var limit = 2;
+    var limit = 50;
     var limitCount = 0;
     var pagSelector = $('#js-pagination-select');
 
