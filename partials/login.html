@@ -1,29 +1,29 @@
 <div class="data-col-wrap">
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-sm-6 col-xs-12">
         <div class="well bs-component">
             <form class="form-horizontal" ng-submit="signIn()">
                 <fieldset>
-                    <legend>
+                    <legend class="login-title">
                         <div class="icon-preview"><i class="mdi-action-lock"></i></div>
                         Login to your account</legend>
                     <div class="form-group">
-                        <div class="col-lg-10">
+                        <div class="col-lg-10 col-sm-10 col-xs-12">
                             <input type="email" ng-model="email" class="form-control floating-label" id="focusedInput" placeholder="Email" required name="email" autofocus>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10">
+                        <div class="col-lg-10 col-sm-10 col-xs-12">
                             <input type="password" ng-model="password" class="form-control floating-label" id="focusedInput" placeholder="Password" required name="password">
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10">
+                        <div class="col-lg-10 col-sm-10 col-xs-12">
                             <button type="submit" class="btn btn-info" btn-loader="loaderStatus" loading-text="Please wait..."><span class="js-btn-text ">Login</span></button>
                         </div>
                     </div>
                 </fieldset>
             </form>
-            <p><a ui-sref="base.login-retrieve-password">forgot password?</a></p>
+            <p class="login-footer"><a ui-sref="base.login-retrieve-password">forgot password?</a></p>
         </div>
     </div>
 </div>

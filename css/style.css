@@ -56,12 +56,12 @@
     text-decoration: none;
 }
 .aside .class a:hover{
-    color: #00796b;
+    color: #31144e; /*#00796b;*/
 }
 
 /*Testing*/
 .selectedMenu {
-    background: #009688;
+    background: #31144e; /* #009688; */
 }
 .selectedMenu> a{
     color: #fff !important;
@@ -143,8 +143,13 @@
     text-align: center;
     padding: 100px 0;
 }
+
+.mdi-editor-mode-edit, .mdi-action-delete{
+  color: #CCCCCC;
+}
+
 .mdi-editor-mode-edit:hover, .mdi-action-delete:hover{
-    color: #009688;
+    color: #31144e; /* #009688; */
 }
 .table th{
     font-size: 14px;
@@ -171,7 +176,7 @@
     color:#41424a !important;
 }
 .header-icon, .button-icon{
-        padding: 8px 0 0 0 !important;
+  padding: 8px 0 0 0 !important;
 }
 
 /* formBuilder Button */
@@ -188,9 +193,13 @@
 .form-builder-wrap .btn-group{
   box-shadow:none;
 }
+
 .button-wrap{
   clear: both;
   height: 50px;
+}
+.button-wrap h4{
+  margin: 25px 0px 0px 0px;  margin: 25px 0px 0px 0px;
 }
 
 .form-horizontal .checkbox{
@@ -210,5 +219,24 @@
 .form-horizontal .form-group{
     margin-right: 0;
     margin-left: 0;
+}
+.aside .class {
+  padding: 0px;
+}
+.aside .class a {
+  display: block;
+  padding: 10px 10px 10px 20px;
+}
+.app-pri-color{
+  color:#31144e;
+}
+.login-title, .login-footer{
+    padding: 0 0 0 12px;
+}
+.password-title{
+    padding: 0 0 0 15px;   
+}
+.form-control{
+    background-image: linear-gradient(#31144e, #31144e), linear-gradient(#d2d2d2, #d2d2d2) !important;
 }
 

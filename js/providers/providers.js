@@ -124,6 +124,7 @@ angular.module('kings-app.providers', [])
   id : "config",
   text : "Config",
   singleton : true,
+  singletonTitle : "Edit config settings",
   columns:[{
     name:"Uid",
     id: "uid"
