@@ -91,9 +91,7 @@ kingsapp.config([
         /*Dev*/
         // url : "http://code-bltdev.cloudthis.com",
         apihost:'http://code-bltdev.cloudthis.com/v1',
-
         url:window.location.protocol+'//'+ window.location.host,
-
         version:"/v1",
         api_key : "bltbfb51fc159335dd8"
     })
