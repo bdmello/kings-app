@@ -99,6 +99,7 @@ angular.module('kings-app.objects',[])
       $scope.apihost    = dataService.getAppConfig().apihost;
       $scope.mobject    = currentObject.data.object;
       $scope.singleton  = false;
+      $scope.singletonTitle = "";
 
       var objectUid = $scope.mobject.uid;
       var classUid  = $state.params.classUid;
@@ -107,6 +108,7 @@ angular.module('kings-app.objects',[])
       menus.forEach(function(menu){
         if(menu.id === classUid && menu.singleton){
           $scope.singleton = true;
+          $scope.singletonTitle = menu.singletonTitle;
         }
       })
 

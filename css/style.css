@@ -188,9 +188,13 @@
 .form-builder-wrap .btn-group{
   box-shadow:none;
 }
+
 .button-wrap{
   clear: both;
   height: 50px;
+}
+.button-wrap h4{
+  margin: 17px 0px 0px 0px;
 }
 
 .form-horizontal .checkbox{
