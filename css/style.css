@@ -56,12 +56,12 @@
     text-decoration: none;
 }
 .aside .class a:hover{
-    color: #31144e; /*#00796b;*/
+    color: #724C9F; /*#00796b;*/
 }
 
 /*Testing*/
 .selectedMenu {
-    background: #31144e; /*#009688; */
+    background: #724C9F; /*#009688; */
 }
 .selectedMenu> a{
     color: #fff !important;
@@ -149,7 +149,7 @@
 }
 
 .mdi-editor-mode-edit:hover, .mdi-action-delete:hover{
-    color: #31144e; /* #009688; */
+    color: #724C9F; /* #009688; */
 }
 .table th{
     font-size: 14px;
@@ -228,29 +228,47 @@
   padding: 10px 10px 10px 20px;
 }
 .app-pri-color{
-  color:#31144e;
+  color:#724C9F;
 }
-.login-title, .login-footer{
+.login-title{
     padding: 0 0 0 12px;
+}
+
+.login-footer{
+    padding: 0 0 0 14px;
 }
 .password-title{
     padding: 0 0 0 15px;   
 }
 .form-control{
-    background-image: linear-gradient(#31144e, #31144e), linear-gradient(#d2d2d2, #d2d2d2) !important;
+    background-image: linear-gradient(#724C9F, #724C9F), linear-gradient(#d2d2d2, #d2d2d2) !important;
 }
 /* Purple color */
 .app-pri-color{
-  color:#31144e !important;
+  color:#724C9F !important;
 }
 .app-pri-bg{
-  background:#31144e !important; 
+  background:#724C9F !important; 
 }
 
-.aside .class a:hover, .aside .class a:focus{
-    color:#B2B28F !important;
+.aside .class a:hover{
+    color:#724C9F !important;
+}
+.aside .class a:focus{
+    color:#FFFFFF !important;
 }
 
 .form-builder-wrap .object-form .group-tracker.active-group>.group-header-wrap{
-    background:#31144e !important; 
+    background:#724C9F !important; 
+}
+.login-footer a{
+    color:#724C9F !important;
+}
+
+.dropdown > a {
+    color: #724C9F !important;
+}
+
+.mdi-action-account-box{
+    font-size: 32px;
 }
