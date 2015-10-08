@@ -95,10 +95,15 @@
 .data-col-wrap legend .icon-preview{
     float:left;
 }
-.logout-btn{
+.logout-btn-mobile{
     padding: 0;
+    margin-top: 0px;
+    display: none;
 }
-.logout-btn i{
+.logout-btn-mobile:hover{
+  background: red;
+}
+.logout-btn-mobile i{
     font-size: 40px;
 }
 .custom-pagination{
@@ -257,7 +262,7 @@
     color:#724C9F !important;
 }
 .aside .class a:focus{
-    color:#FFFFFF !important;
+    color:#724C9F !important;
 }
 .aside .selectedMenu a:hover{
     color:#FFFFFF !important;
@@ -304,11 +309,20 @@
   color:#31144e !important;
 }
 
+.btn-primary:hover{
+  background-color: transparent !important;
+}
+
 @media (max-width:414px) and (min-width:320px) {
+  .logout-btn-mobile{
+    display: inherit;
+  }
+  .logout-btn-pc{
+    display: none;
+  }
   .aside{
       margin-left: -200px;
   }
-
   .main-container{
     margin-left: 0px; 
   }

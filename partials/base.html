@@ -1,10 +1,10 @@
 <div class="main-header">
         <a ng-click="gotoHome()" class="main-logo hand"><img src="images/logo.png"></a>
         <div class="icon-preview menu-displayer" ng-click="viewMenu()"><i class="mdi-action-view-headline"></i><span></span></div>
-        <!-- <button title="Logout" btn-loader="loaderStatus" class="btn btn-primary btn-flat pull-right logout-btn app-pri-color" ng-click="signOut()" ng-show="loggedIn">
+        <button title="Logout" btn-loader="loaderStatus" class="btn btn-primary btn-flat pull-right logout-btn-mobile app-pri-color" ng-click="signOut()" ng-show="loggedIn">
             <div class="icon-preview"><i class="mdi-action-exit-to-app"></i></div>
-        </button> -->
-				<div class="dropdown pull-right" ng-show="loggedIn">
+        </button>
+				<div class="dropdown pull-right hand logout-btn-pc" ng-show="loggedIn">
           <a class="dropdown-toggle" data-toggle="dropdown">
           	<div class="icon-preview"><i class="mdi-action-account-box"></i></div>
           </a>
