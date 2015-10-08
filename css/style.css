@@ -18,7 +18,7 @@
     right: 0;
     height: 75px;
     z-index: 99;
-    background: #EEEEEE;
+    background: #CFD0FD;
 }
 .main-logo{
     float:left;
@@ -97,7 +97,7 @@
     padding: 0;
 }
 .logout-btn i{
-    font-size: 32px;
+    font-size: 40px;
 }
 .custom-pagination{
     padding-left: 0;
@@ -253,4 +253,27 @@
 
 .form-builder-wrap .object-form .group-tracker.active-group>.group-header-wrap{
     background:#31144e !important; 
+}
+.menu-displayer{
+  display: none;
+  float:left;
+  }
+
+.menu-displayer i{
+  font-size: 40px;
+  color:#31144e;
+  margin: 10px 0 0 20px;
+}
+
+@media (max-width:414px) and (min-width:320px) {
+  .aside{
+      margin-left: -200px;
+  }
+
+  .main-container{
+    margin-left: 0px; 
+  }
+  .menu-displayer{
+   display: block; 
+  }
 }

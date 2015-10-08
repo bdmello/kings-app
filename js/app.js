@@ -220,6 +220,10 @@ kingsapp.controller('baseCtrl', [
         $scope.showAddButton =data;
     });
 
+    $scope.viewMenu = function(){
+      Relay.send('view-menu');
+    }
+
     $scope.createObject = function(){
       Relay.send('create-object');
     }
