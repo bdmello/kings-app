@@ -112,7 +112,7 @@ angular.module('kings-app.listView', ['kings-app.providers'])
           }
         }).then(function(res){
           $scope.newLists.splice($scope.newLists.indexOf(data), 1);
-          console.log('New List', $scope.newLists);
+          //console.log('New List', $scope.newLists);
           $scope.totalCount -= 1;
           updatePageCounter();
         })

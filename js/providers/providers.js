@@ -42,7 +42,7 @@ angular.module('kings-app.providers', [])
                 }); 
       },
       getCurrentObject: function(args){
-        console.log('args current object',args);
+        //console.log('args current object',args);
         var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectUid;
         return $http.get(objectUrl, {
           headers : headers
@@ -65,7 +65,7 @@ angular.module('kings-app.providers', [])
       },
       deleteObject: function(args){
         var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectsUid;
-        console.log("headers", headers);
+        //console.log("headers", headers);
         return $http({
           url : objectUrl,
           method:"DELETE",
@@ -75,7 +75,7 @@ angular.module('kings-app.providers', [])
       },
       createObject: function(args){
         var createObjectUrl = url+'/classes/'+args.options.classUid+'/objects';
-        console.log('createObject', args);
+        //console.log('createObject', args);
         return $http.post(createObjectUrl, args.body, {
           headers : headers
         })
@@ -91,11 +91,11 @@ angular.module('kings-app.providers', [])
         })
       },
       getMap : function(key) {
-      console.log("in get map", key)
+      //console.log("in get map", key)
       key = key || "";
       var mapScript = window.location.protocol + '//www.google.com/jsapi' + key;
       var xmlhttp = $.getScript(mapScript).done(function(script, textStatus) {
-        console.log("Google jsapi loaded");
+        //console.log("Google jsapi loaded");
         google.load("maps", "3", {
           other_params: 'sensor=false&libraries=drawing',
           callback: function() {
@@ -103,12 +103,12 @@ angular.module('kings-app.providers', [])
           }
         });
       }).fail(function(jqxhr, settings, exception) {
-        console.log("Google maps loading failed");
+        //console.log("Google maps loading failed");
         if (mapRetryCount < 3) {
-          console.log("Retrying: " + mapRetryCount);
+          //console.log("Retrying: " + mapRetryCount);
           this.getMap();
         } else {
-          console.log("No Go for map");
+          //console.log("No Go for map");
         }
         mapRetryCount++;
       });

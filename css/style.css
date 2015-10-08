@@ -32,6 +32,7 @@
     background: #ffffff;
     padding: 10px 10px 0 10px;
     min-height: 293px;
+    z-index: 95;
 }
 .main-container .table{
     border-top: 1px solid #EEEEEE;
@@ -43,6 +44,7 @@
     height: 100%;
     left: 0;
     position: fixed;
+    z-index: 96;
 }
 
 .aside .class{
@@ -292,9 +294,14 @@
   color:#31144e;
   margin: 10px 0 0 20px;
 }
-
 .dropdown-menu>li>a.username{
     font-weight: bold;
+}
+.icon-addon .fa {
+  color:#ccc !important;
+}
+.icon-addon .form-control:focus+.fa, .icon-addon .form-control:focus+.glyphicon, .icon-addon:hover .fa, .icon-addon:hover .glyphicon{
+  color:#31144e !important;
 }
 
 @media (max-width:414px) and (min-width:320px) {
