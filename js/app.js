@@ -209,6 +209,8 @@ kingsapp.controller('baseCtrl', [
 
     Relay.onRecieve('user', function(e, data){
       if(data){
+        console.log('----> Received User', data);
+        $scope.user = data.data.user;
         $scope.loggedIn = true;            
         $scope.loaderStatus = false;          
       }else{
@@ -219,6 +221,10 @@ kingsapp.controller('baseCtrl', [
     Relay.onRecieve('show-add-button', function(e, data){
         $scope.showAddButton =data;
     });
+
+    $scope.viewMenu = function(){
+      Relay.send('view-menu');
+    }
 
     $scope.createObject = function(){
       Relay.send('create-object');
