@@ -6,7 +6,8 @@ angular.module('kings-app.providers', [])
   var headers = {};
   var self    = this;  
   var url =  "";
-  
+  var mapRetryCount = 0;
+
   self.setAppConfig = function(config){
     appConfig = config;
     url    = appConfig.url+appConfig.version;
@@ -14,7 +15,9 @@ angular.module('kings-app.providers', [])
 
   self.$get = [
   '$http',
-  function($http) {
+  '$q',
+  function($http, $q) {
+    var deferred = $q.defer();
     return {
       getAppConfig: function(){
         return appConfig;
@@ -86,7 +89,31 @@ angular.module('kings-app.providers', [])
         return $http.get(classesUrl, {
           headers : headers
         })
-      }
+      },
+      getMap : function(key) {
+      console.log("in get map", key)
+      key = key || "";
+      var mapScript = window.location.protocol + '//www.google.com/jsapi' + key;
+      var xmlhttp = $.getScript(mapScript).done(function(script, textStatus) {
+        console.log("Google jsapi loaded");
+        google.load("maps", "3", {
+          other_params: 'sensor=false&libraries=drawing',
+          callback: function() {
+            deferred.resolve(true);
+          }
+        });
+      }).fail(function(jqxhr, settings, exception) {
+        console.log("Google maps loading failed");
+        if (mapRetryCount < 3) {
+          console.log("Retrying: " + mapRetryCount);
+          this.getMap();
+        } else {
+          console.log("No Go for map");
+        }
+        mapRetryCount++;
+      });
+      return deferred.promise;
+    }
     };
   }];
   }

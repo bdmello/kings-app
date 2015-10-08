@@ -18,7 +18,7 @@
     right: 0;
     height: 75px;
     z-index: 99;
-    background: #CFD0FD;
+    background: #eee;
 }
 .main-logo{
     float:left;
@@ -128,7 +128,7 @@
 }
 .add-entity-wrap{
     position: relative;
-    margin: 32px 8% 0 0;
+    margin: 32px 9% 0 0;
     width: 56px;
 }
 .add-entity{
@@ -257,6 +257,12 @@
 .aside .class a:focus{
     color:#FFFFFF !important;
 }
+.aside .selectedMenu a:hover{
+    color:#FFFFFF !important;
+}
+.aside .selectedMenu a:focus{
+    color:#FFFFFF !important;
+}
 
 .form-builder-wrap .object-form .group-tracker.active-group>.group-header-wrap{
     background:#724C9F !important; 
@@ -269,7 +275,9 @@
 .dropdown > a {
     color: #724C9F !important;
 }
-
+.dropdown-menu li a:hover{
+  color:#31144e;
+}
 .mdi-action-account-box{
     font-size: 40px;
 }
@@ -285,8 +293,7 @@
   margin: 10px 0 0 20px;
 }
 
-.username{
-    padding: 3px 12px;
+.dropdown-menu>li>a.username{
     font-weight: bold;
 }
 

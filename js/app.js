@@ -202,11 +202,14 @@ kingsapp.controller('baseCtrl', [
     'dataService',
     '$rootScope',
     'relayService',
-    function($scope, $state, dataService, $rootScope, Relay) {
+    'libraryService',
+    '$injector',
+    function($scope, $state, dataService, $rootScope, Relay, LIB, $injector) {
     $scope.loggedIn = false;
     $scope.loaderStatus = false;
     $scope.showAddButton =false;
 
+    
     Relay.onRecieve('user', function(e, data){
       if(data){
         console.log('----> Received User', data);
@@ -242,4 +245,13 @@ kingsapp.controller('baseCtrl', [
         $scope.loaderStatus = false;          
       })
     }
+
+    var goForMap = false;
+
+    function getMap() {
+      dataService.getMap("").then(function(MapStatus) {
+        goForMap = MapStatus;
+        LIB.register('googleMaps');
+      });
+    }getMap();
 }]);

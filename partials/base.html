@@ -4,18 +4,15 @@
         <!-- <button title="Logout" btn-loader="loaderStatus" class="btn btn-primary btn-flat pull-right logout-btn app-pri-color" ng-click="signOut()" ng-show="loggedIn">
             <div class="icon-preview"><i class="mdi-action-exit-to-app"></i></div>
         </button> -->
-				
-				<ul class="nav navbar-nav navbar-right pull-right logout-btn">
-          <li class="dropdown">
-            <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
-            	<div class="icon-preview"><i class="mdi-action-account-box"></i></div>
-            </a>
-            <ul class="dropdown-menu">
-            	<li><span class="username">{{user.first_name}} {{user.last_name}}</span></li>
-              <li><a ng-click="signOut()">Action</a></li>
-            </ul>
-          </li>
-        </ul>
+				<div class="dropdown pull-right">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+          	<div class="icon-preview"><i class="mdi-action-account-box"></i></div>
+          </a>
+          <ul class="dropdown-menu">
+          	<li><a class="username">{{user.first_name}} {{user.last_name}}</a></li>
+            <li class="hand" ng-click="signOut()"><a>Logout</a></li>
+          </ul>
+        </div>
         <div class="add-entity-wrap pull-right" ng-show="loggedIn">
           <button ng-show="showAddButton" title="Add new" class="btn btn-primary btn-fab btn-raised mdi-content-add add-entity app-pri-bg" ng-click="createObject()"><div class="ripple-wrapper"></div></button>
         </div>
