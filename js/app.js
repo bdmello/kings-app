@@ -233,6 +233,12 @@ kingsapp.controller('baseCtrl', [
       Relay.send('create-object');
     }
 
+    $scope.gotoHome = function(){
+      $state.go('base.dashboard.objectsList', {
+        classUid : 'players'
+      });
+    }
+
     $scope.signOut = function(){
       $scope.loaderStatus = true;
       dataService.signOut()
