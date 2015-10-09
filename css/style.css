@@ -314,6 +314,9 @@
 }
 
 @media (max-width:414px) and (min-width:320px) {
+  .form-control{
+    border-bottom: 1px solid #EEEEEE;
+  }
   .logout-btn-mobile{
     display: inherit;
   }
@@ -321,7 +324,7 @@
     display: none;
   }
   .aside{
-      margin-left: -200px;
+    margin-left: -200px;
   }
   .main-container{
     margin-left: 0px; 
