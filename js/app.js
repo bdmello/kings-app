@@ -47,7 +47,7 @@ kingsapp.config([
       data: {}
     })
     .state('base.login-resetAppUser-password', {
-      url: '/application/users/reset_password/:token',
+      url: '/application/users/reset/password/:token',
       templateUrl: 'partials/resetPassword.html',
       controller: 'resetCtrl',
       data: {
