@@ -230,6 +230,7 @@ kingsapp.controller('baseCtrl', [
     }
 
     $scope.createObject = function(){
+      console.log('Create Object Clicked')
       Relay.send('create-object');
     }
 

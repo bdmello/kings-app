@@ -1,20 +1,24 @@
 <div class="main-header">
         <a ng-click="gotoHome()" class="main-logo hand"><img src="images/logo.png"></a>
+        <!-- Mobile menu icon -->
         <div class="icon-preview menu-displayer" ng-click="viewMenu()" ng-show="loggedIn"><i class="mdi-action-view-headline"></i><span></span></div>
+        <!-- Logout for Mobile -->
         <button title="Logout" btn-loader="loaderStatus" class="btn btn-primary btn-flat pull-right logout-btn-mobile app-pri-color" ng-click="signOut()" ng-show="loggedIn">
-            <div class="icon-preview"><i class="mdi-action-exit-to-app"></i></div>
+            <div class="icon-preview logout-button-icon-preview"><i class="mdi-action-exit-to-app"></i></div>
         </button>
+        <!-- Logout for PC -->
 				<div class="dropdown pull-right hand logout-btn-pc" ng-show="loggedIn">
           <a class="dropdown-toggle" data-toggle="dropdown">
-          	<div class="icon-preview"><i class="mdi-action-account-box"></i></div>
+          	<div class="icon-preview logout-button-icon-preview">
+              <i class="mdi-action-account-box"></i>
+            </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-right with-caret">
           	<li><a class="username">{{user.first_name}} {{user.last_name}}</a></li>
             <li class="hand" ng-click="signOut()"><a>Logout</a></li>
           </ul>
         </div>
-        <div class="add-entity-wrap pull-right" ng-show="loggedIn">
-          <button ng-show="showAddButton" title="Add new" class="btn btn-primary btn-fab btn-raised mdi-content-add add-entity app-pri-bg" ng-click="createObject()"><div class="ripple-wrapper"></div></button>
-        </div>
 </div>
 <div ui-view></div>
+<!-- Add Button -->
+  <button ng-show="showAddButton" ng-show="loggedIn" title="Add new" class="btn-fab btn-raised mdi-content-add add-entity app-pri-bg shadow-z-1" ng-click="createObject()"><div class="ripple-wrapper"></div></button>

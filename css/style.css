@@ -133,18 +133,32 @@
     font-size: 18px;
     margin: 0 0 0 5px;
 }
+
 .add-entity-wrap{
-    position: relative;
-    margin: 32px 9% 0 0;
-    width: 56px;
+  /* position: relative;
+  clear: both;
+  border: 1px solid;
+  float: right;
+  height: 10px;
+  width: 56px; */
 }
-.add-entity{
-    position: absolute;
-    right: 0;
-    /* top: 60%; */
-    width: 100% !important;
-    box-shadow: 0 2px 2px rgba(0,0,0,.3) !important;
+.add-entity, .add-entity:active, .add-entity:focus{
+  position: fixed !important;
+  right: 2% !important;
+  bottom: 2% !important;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 2px 2px rgba(0,0,0,.3) !important;
+  z-index: 1000;
+  border-radius: 28px;
+  border: 0 none;
+  color: #FFFFFF;
 }
+
+.add-entity:hover{
+ background-color: #8e62c4 !important;
+}
+
 .list-loader{
     margin: 0 auto;
     text-align: center;
@@ -314,9 +328,9 @@
 }
 
 @media (max-width:414px) and (min-width:320px) {
-  .form-control{
+  /* .form-control{
     border-bottom: 1px solid #EEEEEE;
-  }
+  } */
   .logout-btn-mobile{
     display: inherit;
   }
@@ -345,3 +359,21 @@
     padding: 0px;
   }
 }
+
+.logout-button-icon-preview{
+  font-size: 48px;
+  padding: 10px 5px 0px 0px;
+}
+
+.mdi-action-account-box{
+  font-size: 48px;
+}
+
+
+/* .add-entity{
+  font-size: 26px;
+  position: fixed;
+  width: 56px !important;
+  bottom: 20px;
+  right: 20px;
+} */
