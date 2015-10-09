@@ -204,7 +204,8 @@ kingsapp.controller('baseCtrl', [
     'relayService',
     'libraryService',
     '$injector',
-    function($scope, $state, dataService, $rootScope, Relay, LIB, $injector) {
+    'utilsService',
+    function($scope, $state, dataService, $rootScope, Relay, LIB, $injector, Utils) {
     $scope.loggedIn = false;
     $scope.loaderStatus = false;
     $scope.showAddButton =false;
@@ -222,7 +223,9 @@ kingsapp.controller('baseCtrl', [
     });
     
     Relay.onRecieve('show-add-button', function(e, data){
-        $scope.showAddButton =data;
+      Utils.sa($scope, function(){
+        $scope.showAddButton = data;
+      })
     });
 
     $scope.viewMenu = function(){
