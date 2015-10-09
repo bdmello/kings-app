@@ -316,6 +316,10 @@
 .dropdown-menu>li>a.username{
     font-weight: bold;
 }
+.dropdown-menu>li>a.username:hover{
+  background: #FFFFFF !important;
+  color: #000000;
+}
 .icon-addon .fa {
   color:#ccc !important;
 }
@@ -369,6 +373,17 @@
   font-size: 48px;
 }
 
+.dropdown-menu.dropdown-menu-right{
+  right: 12px;
+}
+
+.dropdown-menu li:hover{
+  background: #724c9f;
+}
+
+.dropdown-menu li > a:hover{
+  color: #FFFFFF;
+}
 
 /* .add-entity{
   font-size: 26px;

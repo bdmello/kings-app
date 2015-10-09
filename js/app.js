@@ -170,17 +170,6 @@ kingsapp.run([
     //extend Angular's scope allowing you to remove listeners
     Relay.extendRootScope();
 
-    $rootScope.$on('$viewContentLoading', function(event, viewConfig){
-      if(viewConfig.view.self.name === 'base.dashboard.objectsList'){
-        $timeout(function() {
-          Relay.send('show-add-button', true);
-          //Relay.send('set-menu', true);      
-        }, 100);
-      }else{
-        Relay.send('show-add-button', false);      
-      }
-    });
-
     $rootScope.$on('$stateChangeSuccess', function(){
       if($state.is('base.dashboard.objectsList')){
         $timeout(function() {
@@ -216,17 +205,14 @@ kingsapp.controller('baseCtrl', [
         //console.log('----> Received User', data);
         $scope.user = data.data.user;
         $scope.loggedIn = true;            
-        $scope.loaderStatus = false;          
+        $scope.loaderStatus = false;
+        $scope.showAddButton = $scope.loggedIn;          
       }else{
+        $scope.loggedIn = false;            
         $scope.showAddButton =false;
       }
     });
     
-    Relay.onRecieve('show-add-button', function(e, data){
-      Utils.sa($scope, function(){
-        $scope.showAddButton = data;
-      })
-    });
 
     $scope.viewMenu = function(){
       Relay.send('view-menu');
@@ -248,6 +234,7 @@ kingsapp.controller('baseCtrl', [
       dataService.signOut()
       .then(function(){
         $scope.loggedIn = false;
+        $scope.showAddButton =false;
         $state.go('base.login', {
         });
       })
