@@ -94,7 +94,7 @@ kingsapp.config([
 
        url:window.location.protocol+'//'+ window.location.host,
        version:"/v1",
-       api_key : "bltbfb51fc159335dd8"
+       api_key : "blt72c50188711c48b3"
     })
 
     function dashboardResolvers(){
@@ -212,7 +212,7 @@ kingsapp.controller('baseCtrl', [
     
     Relay.onRecieve('user', function(e, data){
       if(data){
-        console.log('----> Received User', data);
+        //console.log('----> Received User', data);
         $scope.user = data.data.user;
         $scope.loggedIn = true;            
         $scope.loaderStatus = false;          
