@@ -200,10 +200,10 @@ kingsapp.controller('baseCtrl', [
     $scope.showAddButton =false;
 
     
-    Relay.onRecieve('user', function(e, data){
-      if(data){
-        //console.log('----> Received User', data);
-        $scope.user = data.data.user;
+    Relay.onRecieve('user', function(e, userdata){
+      if(userdata){
+        //console.log('----> Received User', userdata);
+        $scope.user = userdata;
         $scope.loggedIn = true;            
         $scope.loaderStatus = false;
         $scope.showAddButton = $scope.loggedIn;          

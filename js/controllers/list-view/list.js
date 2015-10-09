@@ -159,8 +159,6 @@ angular.module('kings-app.listView', ['kings-app.providers'])
           /* Set newList */
           $scope.newLists = res.data.objects;
         }
-        
-        
         updatePageCounter();
         $scope.fetchComplete = true;
       }, function(){
@@ -174,10 +172,16 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     
     /* Update min-max counter in pagination controll */
     function updatePageCounter(){
+      console.log('Udpate Page Counter');
       Utils.sa($scope, function(){
         $scope.currentCount = $scope.newLists.length;
         var maxLimit = $scope.currentPage * limit;
-        $scope.maxLimit = maxLimit > $scope.currentCount ? $scope.currentCount : maxLimit;
+        $scope.maxLimit = maxLimit;
+        
+        if(maxLimit > $scope.currentCount){
+          $scope.maxLimit = (maxLimit - limit)+ $scope.currentCount;
+        }
+        
         $scope.minLimit = $scope.currentCount > 0 ? maxLimit - limit + 1 : 0;
         var pagesLength = Math.ceil($scope.totalCount/limit);
         for(var i=1;i<=pagesLength;i++){

@@ -11,7 +11,10 @@ angular.module('kings-app.dashboard', ['kings-app.providers'])
   'user',
   'relayService',
   function($scope, $q, $location, $http, dataService, menus, $state, user, Relay){
-    $scope.$emit('user', user);
+    //console.log('User--->', user);
+    /* Set valid `user` object from get call or cache */
+    var userdata = user.data && user.data.user || user;
+    Relay.send('user', userdata);
     $scope.menus = menus;
     var viewMenu = false;
     //set class id
