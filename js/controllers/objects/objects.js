@@ -7,7 +7,11 @@ angular.module('kings-app.objects',[])
     '$state',
     'alertService',
     'utilsService',
-    function($scope, currentClass, user, dataService, $state, Alert, Utils){
+    'relayService',
+    function($scope, currentClass, user, dataService, $state, Alert, Utils, Relay){
+
+      //Send Relay to hide addButton
+      Relay.send('addButtonState', false);
 
       //Get classUid
       var classUid = $state.params.classUid;
@@ -90,7 +94,11 @@ angular.module('kings-app.objects',[])
     'alertService',
     'utilsService',
     'menu',
-    function($scope, $state, user, currentClass, currentObject, dataService, Alert, Utils, menus){
+    'relayService',
+    function($scope, $state, user, currentClass, currentObject, dataService, Alert, Utils, menus, Relay){
+
+      //Send Relay to hide addButton
+      Relay.send('addButtonState', false);
 
       /* Data Required for formBuilder */
       $scope.mclass     = currentClass.data.class;

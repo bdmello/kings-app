@@ -212,6 +212,13 @@ kingsapp.controller('baseCtrl', [
         $scope.showAddButton =false;
       }
     });
+
+    //Listen and hide add button
+    Relay.onRecieve('addButtonState', function(e, data){
+      Utils.sa($scope, function(){
+        $scope.showAddButton = data;
+      })
+    });
     
 
     $scope.viewMenu = function(){

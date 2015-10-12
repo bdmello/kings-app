@@ -9,6 +9,10 @@ angular.module('kings-app.listView', ['kings-app.providers'])
   '$state',
   'menu',
   function($scope, $location, $http, dataService, Relay, Utils, $state, menus) {
+
+    //Send Relay to show addButton
+    Relay.send('addButtonState', true);
+
     var classUid = $state.params.classUid;
 
     var limit = 50;
