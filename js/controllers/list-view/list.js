@@ -89,6 +89,10 @@ angular.module('kings-app.listView', ['kings-app.providers'])
       $scope.viewableQuery = null;
     };
 
+    $scope.toggleAdvanceSearch = function(){
+      $scope.showAdvanceSearch = !$scope.showAdvanceSearch;
+    }
+
     /*
       Execute Search Query
      */

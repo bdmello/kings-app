@@ -1,8 +1,8 @@
  <div class="main-container clearfix">
     <div class="col-md-12 custom-pagination clearfix">
         <div>
-          <div search-entity search-text="searchText"></div>
-          <button class="btn btn-primary">Show advance search</button>
+          <div search-entity search-text="searchText" ng-hide="showAdvanceSearch"></div>
+          <button class="btn btn-primary" ng-click="toggleAdvanceSearch()" ng-hide="showAdvanceSearch">Show advance search</button>
           <ul class="pagination pull-right">
               <li>
                   <select class="form-control page-selector" id="js-pagination-select">
@@ -17,7 +17,8 @@
           </h6>
         </div>
         <!-- Query Builder -->
-          <div class="advanced-search-wrap">
+          <div class="advanced-search-wrap" ng-show="showAdvanceSearch">
+            <button ng-click="toggleAdvanceSearch()" class="btn btn-primary">Hide Advance Query</button>
             <div ng-class="{'false-hidden': viewableQuery}">
               <div objects-query-builder="intermediateQuery" cls="currentClass" get-query-now="getQueryNow" get-query-callback="getQueryCallback" class="qb-responsive"></div>
               <!-- Date picker will render here -->
