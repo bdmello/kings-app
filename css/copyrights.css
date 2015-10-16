@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'HelveticaCondensed';
+  src        : url('../fonts/Helvetica-Condensed.ttf') format('truetype');
+}
+.single-page{
+  background   : #5A409B;
+  color        : #FFFFFF;
+  /*font-family: Helvetica;*/
+  font-family  : "HelveticaCondensed","HelveticaNeueThinCondensed", "HelveticaNeue-Thin-Condensed", "Helvetica Neue Thin Condensed", "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnRegular', "Arial Narrow", "Arial", sans-serif; 
+  font-weight  :200; 
+  font-stretch :condensed;
+  text-align   : center;
+  line-height  : 1.7;
+  height       : 100%;
+}
+
+.single-page-container{
+  padding-top : 20px;
+  max-width   : 375px;
+  /* center the element */
+  right       : 0;
+  left        : 0;
+  margin-right: auto;
+  margin-left : auto;
+}
+
+.single-page-container .logo{
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.single-page-container p{
+  margin-bottom: 24px;
+  font-size    : 14px;
+}

@@ -29,6 +29,10 @@ kingsapp.config([
       controller: 'baseCtrl',
       templateUrl: 'partials/base.html'
     })
+    .state('copyrights',{
+      url:"/copyrights",
+      templateUrl: 'partials/copyrights.html'
+    })
     .state('base.login', {
       url: "/login",
       templateUrl: 'partials/login.html',
@@ -94,7 +98,8 @@ kingsapp.config([
 
        url:window.location.protocol+'//'+ window.location.host,
        version:"/v1",
-       api_key : "blt72c50188711c48b3"
+       api_key : "blt72c50188711c48b3",
+       _api_key : "bltbfb51fc159335dd8"
     })
 
     function dashboardResolvers(){
