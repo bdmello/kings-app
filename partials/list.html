@@ -1,16 +1,42 @@
  <div class="main-container clearfix">
     <div class="col-md-12 custom-pagination clearfix">
-        <div search-entity search-text="searchText"></div>
-        <ul class="pagination pull-right">
-            <li>
-                <select class="form-control page-selector" id="js-pagination-select">
-                     <option ng-repeat="page in pages track by $index" value="{{page}}" ng-selected="page==currentPage" >{{page}}</option>
-                </select>
-            </li>
-            <li ng-class="{'disabled':currentPage==1}" ng-click="prevList()"><a href="javascript:void(0)">«</a></li>
-            <li ng-class="{'disabled':totalCount==maxLimit}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
-        </ul>
-        <h6 class="pull-right"><i>Showing</i> <b>{{minLimit}}</b> to <b>{{maxLimit}}</b> <i>of</i> <b>{{totalCount}}</b> <i>objects</i></h6>
+        <div>
+          <div search-entity search-text="searchText"></div>
+          <button class="btn btn-primary">Show advance search</button>
+          <ul class="pagination pull-right">
+              <li>
+                  <select class="form-control page-selector" id="js-pagination-select">
+                       <option ng-repeat="page in pages track by $index" value="{{page}}" ng-selected="page==currentPage" >{{page}}</option>
+                  </select>
+              </li>
+              <li ng-class="{'disabled':currentPage==1}" ng-click="prevList()"><a href="javascript:void(0)">«</a></li>
+              <li ng-class="{'disabled':totalCount==maxLimit}" ng-click="nxtList()"><a href="javascript:void(0)">»</a></li>
+          </ul>
+          <h6 class="pull-right">
+            <i>Showing</i> <b>{{minLimit}}</b> to <b>{{maxLimit}}</b> <i>of</i> <b>{{totalCount}}</b> <i>objects</i>
+          </h6>
+        </div>
+        <!-- Query Builder -->
+          <div class="advanced-search-wrap">
+            <div ng-class="{'false-hidden': viewableQuery}">
+              <div objects-query-builder="intermediateQuery" cls="currentClass" get-query-now="getQueryNow" get-query-callback="getQueryCallback" class="qb-responsive"></div>
+              <!-- Date picker will render here -->
+              <div id="js-datepicker-wrap"></div>
+              <div class='button-wrap'>
+                <a class='btn btn-primary btn-xs' ng-click="getAdvancedSearchQuery()">Get objects</a>
+                <a class='btn btn-primary btn-xs ml5' ng-click="viewQuery()">View query</a>
+              </div>
+            </div>
+            <div ng-class="{'hidden': !viewableQuery}">
+              <div class="view-query-wrap">
+                <textarea class="form-control mt10 mb10" rows="3" ng-model="viewableQuery"></textarea>
+              </div>
+              <div class='button-wrap'>
+                <a class='btn btn-primary btn-xs' ng-click="hideViewableQuery()">Hide query</a>
+              </div>
+            </div>
+          </div>
+        <!-- ./Query Builder -->
     </div>
     <table class="table table-hover" ng-show="newLists.length > 0">
         <thead>

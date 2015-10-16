@@ -6,6 +6,7 @@ var kingsapp = angular.module('kingsapp', [
      'kings-app.listView',
      'kings-app.objects',
      'formBuilder',
+     'objectsQueryBuilder',
      'global-directives'
     ]);
 
@@ -65,6 +66,7 @@ kingsapp.config([
       url: "/:classUid?p&skip&filter",
       controller: 'listCtrl',
       //resolve: listResolvers(),
+      resolve: classSchemaResolvers(),
       templateUrl: 'partials/list.html'
     })
     .state('base.dashboard.objectsList-create',{
@@ -94,7 +96,8 @@ kingsapp.config([
 
        url:window.location.protocol+'//'+ window.location.host,
        version:"/v1",
-       api_key : "blt72c50188711c48b3"
+       //api_key : "blt72c50188711c48b3" //PROD
+       api_key : "bltbfb51fc159335dd8" //KingsApp Test
     })
 
     function dashboardResolvers(){

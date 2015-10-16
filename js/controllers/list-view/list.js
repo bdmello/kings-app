@@ -8,31 +8,94 @@ angular.module('kings-app.listView', ['kings-app.providers'])
   'utilsService',
   '$state',
   'menu',
-  function($scope, $location, $http, dataService, Relay, Utils, $state, menus) {
+  'currentClass',
+  function($scope, $location, $http, dataService, Relay, Utils, $state, menus, currentClass) {
 
     //Send Relay to show addButton
     Relay.send('addButtonState', true);
 
-    var classUid = $state.params.classUid;
-
-    var limit = 50;
-    var limitCount = 0;
+    var classUid    = $state.params.classUid;
+    var limit       = 50;
+    var limitCount  = 0;
     var pagSelector = $('#js-pagination-select');
 
-    $scope.pages = [];
-    $scope.skip = parseInt($state.params.skip) || 0;
-    $scope.searchText = $state.params.filter || "";
-    $scope.currentPage = $state.params.p || 1;
-    $scope.currentCount = 0;
-    $scope.loaderStatus = false;
-    $scope.limitReached = false;
-    $scope.totalCount = 0;
-    $scope.newLists = [];
-    $scope.actions = ['edit', 'delete'];
-    $scope.fetchComplete = false;
+    $scope.pages          = [];
+    $scope.skip           = parseInt($state.params.skip) || 0;
+    $scope.searchText     = $state.params.filter || "";
+    $scope.currentPage    = $state.params.p || 1;
+    $scope.currentCount   = 0;
+    $scope.loaderStatus   = false;
+    $scope.limitReached   = false;
+    $scope.totalCount     = 0;
+    $scope.newLists       = [];
+    $scope.actions        = ['edit', 'delete'];
+    $scope.fetchComplete  = false;
     $scope.singletonClass = false;
-    $scope.maxLimit = 0;
-    $scope.minLimit = 0;
+    $scope.maxLimit       = 0;
+    $scope.minLimit       = 0;
+
+  /**
+   * Testing for QueryBuilder
+   */
+
+    // Advanced search query
+    var advancedSearchParams = undefined;
+    var searchParamQuery     = $location.search().query;
+    var viewQueryNow         = false;
+
+    if(searchParamQuery){
+      advancedSearchParams = JSON.parse(searchParamQuery);
+      console.log('advancedSearchParams ' , advancedSearchParams);
+    }
+
+    $scope.currentClass      = currentClass.data.class;
+    $scope.intermediateQuery = [];
+    $scope.getQueryNow       = false;
+    $scope.getQueryCallback  = function(getQuery){
+      getQuery.then(function(res) {
+        if (viewQueryNow) {
+          console.log('viewQueryNow',viewQueryNow);
+          $scope.viewableQuery = JSON.stringify(res);
+          console.log('viewableQuery',$scope.viewableQuery);
+        } else {
+          advancedSearchParams = res;
+          console.log('advancedSearchParams--> ' , advancedSearchParams);
+          console.log('$scope', $scope);
+          //getObjects();
+          
+          //Fetch Objects
+          var params = {
+            skip: $scope.skip,
+            query: JSON.stringify(advancedSearchParams)
+          };
+
+          _initObjects(params);
+        }
+      }, function() {
+        console.log("came in error callback");
+      }).finally(function() {
+        console.log("helllo");
+        $scope.getQueryNow = false;
+      });
+    }
+
+    $scope.viewQuery = function() {
+      $scope.getQueryNow = true;
+      viewQueryNow = true;
+    };
+
+    $scope.hideViewableQuery = function() {
+      viewQueryNow         = false;
+      $scope.viewableQuery = null;
+    };
+
+    /*
+      Execute Search Query
+     */
+    $scope.getAdvancedSearchQuery = function(){
+      console.log('getAdvancedSearchQuery');
+      $scope.getQueryNow = true;
+    }
 
     $scope.columnData = menus.filter(function(menu){
       if(menu.id === classUid){
@@ -48,7 +111,6 @@ angular.module('kings-app.listView', ['kings-app.providers'])
     _initObjects({
       skip : $scope.skip
     });
-
 
     $scope.action = function(act, data){
       if(act === 'edit')
@@ -71,8 +133,6 @@ angular.module('kings-app.listView', ['kings-app.providers'])
         skip : $scope.skip
       });
     }
-
-
 
     $scope.prevList = function(){
       if($scope.currentPage === 1)
@@ -132,18 +192,22 @@ angular.module('kings-app.listView', ['kings-app.providers'])
 
 
     function _initObjects(params){
-      
       var queryObject = {
         options : {
           classUid : classUid
         },
         params : {
-          skip: params.skip,
-          limit: limit,
+          skip: 0,
+          limit: limit, //default limit
           include_count: true,
           include_unpublished : true
         }
       };
+
+      //Overide queryObject.params
+      if(params){
+        queryObject.params = _.merge(queryObject.params, params);
+      }
 
       if($scope.searchText){
         queryObject.params.typeahead = $scope.searchText;
@@ -179,7 +243,7 @@ angular.module('kings-app.listView', ['kings-app.providers'])
       console.log('Udpate Page Counter');
       Utils.sa($scope, function(){
         $scope.currentCount = $scope.newLists.length;
-        var maxLimit = $scope.currentPage * limit;
+        var maxLimit    = $scope.currentPage * limit;
         $scope.maxLimit = maxLimit;
         
         if(maxLimit > $scope.currentCount){

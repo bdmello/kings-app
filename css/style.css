@@ -385,6 +385,12 @@
   color: #FFFFFF;
 }
 
+
+/* Query Builder */
+.qb-toggle-button{
+  margin-top: 10px;
+}
+
 /* .add-entity{
   font-size: 26px;
   position: fixed;
