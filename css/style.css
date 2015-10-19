@@ -391,6 +391,11 @@
   margin-top: 10px;
 }
 
+.qb-btn{
+  font-size: 14px;
+  padding: 3px 10px;
+}
+
 /* .add-entity{
   font-size: 26px;
   position: fixed;
