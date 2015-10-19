@@ -396,10 +396,14 @@
   padding: 3px 10px;
 }
 
-/* .add-entity{
-  font-size: 26px;
-  position: fixed;
-  width: 56px !important;
-  bottom: 20px;
-  right: 20px;
-} */
+.select2-results .select2-highlighted{
+  background: #724c9f;
+}
+
+.btn-info{
+  background-color: #00BCD4 !important;
+}
+
+.btn-info:hover{
+  background-color: #03a7ba !important;
+}
