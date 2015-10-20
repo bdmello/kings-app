@@ -377,14 +377,13 @@
   right: 12px;
 }
 
-.dropdown-menu li:hover{
+.logout-btn-pc .dropdown-menu li:hover{
   background: #724c9f;
 }
 
-.dropdown-menu li > a:hover{
+.logout-btn-pc .dropdown-menu a:hover{
   color: #FFFFFF;
 }
-
 
 /* Query Builder */
 .qb-toggle-button{
@@ -404,6 +403,6 @@
   background-color: #00BCD4 !important;
 }
 
-.btn-info:hover{
+/* .btn-info:hover{
   background-color: #03a7ba !important;
-}
+} */
