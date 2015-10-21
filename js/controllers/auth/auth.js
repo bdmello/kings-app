@@ -113,6 +113,10 @@ angular.module('kings-app.auth', ['kings-app.providers'])
         }
         resetPromise
         .success(function(data, status, headers, config) {
+            //Clears form
+            $scope.credentials.password = '';
+            $scope.credentials.password_confirmation = '';
+            
             $scope.loaderStatus = false;
             Alert.notify({
               title: data.notice,
