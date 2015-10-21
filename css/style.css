@@ -219,6 +219,15 @@
   clear: both;
   height: 50px;
 }
+
+.button-wrap .btn{
+  font-size: 14px;
+}
+
+.button-wrap .btn:hover{
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,.12),0 1px 6px 0 rgba(0,0,0,.12);
+}
+
 .button-wrap h4{
   margin: 25px 0px 0px 0px;  margin: 25px 0px 0px 0px;
 }
@@ -408,6 +417,12 @@
 .btn-info{
   background-color: #00BCD4 !important;
 }
+
+/* Query Builder Button */
+.qb-group-header .btn-info{
+  font-size: 14px;
+}
+
 
 /* .btn-info:hover{
   background-color: #03a7ba !important;
