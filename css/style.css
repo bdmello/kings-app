@@ -278,7 +278,8 @@
   color:#724C9F !important;
 }
 .app-pri-bg{
-  background:#724C9F !important; 
+  background:#724C9F !important;
+  color: #FFFFFF !important;
 }
 
 .aside .class a:hover{
@@ -410,20 +411,18 @@
   padding: 8px 0px 0px 0px;
 }
 
+/* Fix for Date Picker */
 .select2-results .select2-highlighted{
   background: #724c9f;
 }
 
-.btn-info{
-  background-color: #00BCD4 !important;
-}
-
 /* Query Builder Button */
 .qb-group-header .btn-info{
+  background-color: #00BCD4;
   font-size: 14px;
 }
 
-
-/* .btn-info:hover{
-  background-color: #03a7ba !important;
-} */
+/* Overide SmartAdmin Selection */
+::selection{
+  background-color: rgba(114, 76, 159, 0.37);
+}
