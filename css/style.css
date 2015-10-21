@@ -178,7 +178,7 @@
 .search-wrap{
     padding: 0;
     float:left;
-    margin: 3px 10px 0 0;
+    margin: -5px 10px 0 0;
 }
 .breadcrumb{
     display: none;
@@ -392,7 +392,13 @@
 
 .qb-btn{
   font-size: 14px;
-  padding: 3px 10px;
+  padding: 9px 0px 0px 0px;
+  text-decoration: underline;
+  color: #724c9f;
+}
+
+.qb-hide-btn{
+  padding: 8px 0px 0px 0px;
 }
 
 .select2-results .select2-highlighted{

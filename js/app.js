@@ -96,8 +96,8 @@ kingsapp.config([
 
        url:window.location.protocol+'//'+ window.location.host,
        version:"/v1",
-       //api_key : "blt72c50188711c48b3" //PROD
-       api_key : "bltbfb51fc159335dd8" //KingsApp Test
+       api_key : "blt72c50188711c48b3" //PROD
+       //api_key : "bltbfb51fc159335dd8" //KingsApp Test
     })
 
     function dashboardResolvers(){
