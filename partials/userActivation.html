@@ -1,0 +1,14 @@
+<div class="data-col-wrap">
+    <div class="col-lg-6 col-sm-6 col-xs-12">
+        <div class="well bs-component user-activation-wrap">
+            <div class="user-activation" ng-show="loader">
+            	<h2>Please wait while we activate your account...</h2>
+            	<img src="../images/loaders/list-loader.gif" height="31" width="31">
+            </div>
+            <div class="user-activation" ng-show="!loader">
+            	<h2 ng-show="activationStatus">Your account has been activated successfully!</h2>
+            	<h2 ng-show="!activationStatus">Please try again later!</h2>
+            </div>
+        </div>
+    </div>
+</div>

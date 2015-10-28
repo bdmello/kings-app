@@ -421,6 +421,15 @@
   background-color: #00BCD4;
   font-size: 14px;
 }
+.user-activation-wrap{
+  min-height: 300px;
+}
+
+.user-activation{
+  text-align: center;
+  margin-top: 100px;
+  color: #724c9f;
+}
 
 /* Overide SmartAdmin Selection */
 ::selection{

@@ -63,6 +63,12 @@ angular.module('kings-app.providers', [])
           headers : headers
         });
       },
+      activateAppUser: function(args){
+        var activationUrl = url+'/application/users/'+args.options.userUid+'/activate/'+args.options.activationToken; 
+        return $http.get(activationUrl,{
+          headers : headers
+        });
+      },
       deleteObject: function(args){
         var objectUrl = url+'/classes/'+args.options.classUid+'/objects/'+args.options.objectsUid;
         //console.log("headers", headers);

@@ -59,6 +59,11 @@ kingsapp.config([
         appUser: true
       }
     })
+    .state('base.activate-appUser',{
+      url: '/application/users/:user_uid/activate/:activation_token',
+      templateUrl: 'partials/userActivation.html',
+      controller: 'userActivationCtrl'
+    })
     .state('base.dashboard', {
       url: "/dashboard",
       abstract:true,

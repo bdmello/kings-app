@@ -145,4 +145,36 @@ angular.module('kings-app.auth', ['kings-app.providers'])
       return (data.password.length >= 8 && data.password_confirmation.length >= 8) 
     }
   }
-]);
+])
+.controller('userActivationCtrl', [
+  '$scope',
+  '$state',
+  'dataService',
+  'alertService',
+  function ($scope, $state, dataService, Alert){
+    $scope.loader = true;
+    dataService.activateAppUser({
+      options : {
+        userUid : $state.params.user_uid,
+        activationToken : $state.params.activation_token
+      }
+    })
+    .success(function (data, status, headers, config){
+      $scope.activationStatus = true;
+      $scope.loader = false;
+      Alert.notify({
+        title: data.notice,
+        content: 'Success',
+        type: 'success'
+      });
+    })
+    .error(function (data, status, headers, config){
+      $scope.activationStatus = false;
+      $scope.loader = false;
+      Alert.notify({
+        title: "User activation failed",
+        content: data.error_message,
+        type: 'error'
+      });
+    })
+}])
