@@ -94,20 +94,36 @@ kingsapp.config([
       templateUrl: '/partials/objects.html'
     })
    
+    /**
+     * App Config Enviornment
+     */
     
-    dataServiceProvider.setAppConfig({
-       /*Prod*/
-       apihost:window.location.protocol+'//'+ window.location.host+'/v1',
-       //url : "https://kings-backend.built.io",
-       /*Dev*/
-       //url : "http://code-bltdev.cloudthis.com",
-       //apihost:'http://code-bltdev.cloudthis.com/v1',
+    var appEnv = {
+      prod : {
+        apihost : "https://kings-backend.built.io/v1",
+        url     : "https://kings-backend.built.io",
+        version : "/v1",
+        api_key : "blt72c50188711c48b3"
+      },
 
-       url:window.location.protocol+'//'+ window.location.host,
-       version:"/v1",
-       api_key : "blt72c50188711c48b3" //PROD
-       //api_key : "bltbfb51fc159335dd8" //KingsApp Test
-    })
+      dev : {
+        apihost : "http://code-bltdev.cloudthis.com/v1",
+        url     : "http://code-bltdev.cloudthis.com",
+        version : "/v1",
+        api_key : "blt72c50188711c48b3"
+      },
+
+      local : {
+        apihost : window.location.protocol+'//'+ window.location.host+'/v1',
+        url     : window.location.protocol+'//'+ window.location.host,
+        version : "/v1",
+        api_key : "bltbfb51fc159335dd8" //DEV
+        //api_key : "blt72c50188711c48b3" //PROD
+      },
+    }
+
+    /* Set App Env */
+    dataServiceProvider.setAppConfig(appEnv.local);
 
     function dashboardResolvers(){
       return {
