@@ -445,7 +445,7 @@
   bottom: 2% !important;
   width: 56px;
   height: 56px;
-  margin-bottom: 62px;
+  margin-bottom: 65px;
   box-shadow: 0 2px 2px rgba(0,0,0,.3) !important;
   z-index: 1000;
   border-radius: 28px;
@@ -457,4 +457,31 @@
 
 .chat-button:hover{
   opacity: 0.8;
+}
+
+.chat-box{
+  position: fixed !important;
+  right: 0% !important;
+  bottom: 0% !important;
+  box-shadow: 0 2px 2px rgba(0,0,0,.3) !important;
+  z-index: 1000;
+  border: 0 none;
+  background: #FCFCFC;
+  height: 100%;
+  width: 310px;
+}
+
+.chat-box-header{
+  background: #724C9F;
+  padding: 10px;
+  color: #FFFFFF;
+  font-size: 18px;
+}
+
+.chat-btn-close{
+  color: #ddc1ff;
+}
+
+.chat-btn-close:hover{
+  color: #FFFFFF;
 }

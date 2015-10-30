@@ -35,5 +35,5 @@ angular.module('kings-app.dashboard', ['kings-app.providers'])
       $scope.$apply(function(){
         $scope.selectedClassId = data.classUid;
       })
-    })
+    });
 }]);

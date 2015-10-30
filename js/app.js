@@ -223,21 +223,22 @@ kingsapp.controller('baseCtrl', [
     '$injector',
     'utilsService',
     function($scope, $state, dataService, $rootScope, Relay, LIB, $injector, Utils) {
-    $scope.loggedIn = false;
-    $scope.loaderStatus = false;
-    $scope.showAddButton =false;
+    $scope.loggedIn       = false;
+    $scope.loaderStatus   = false;
+    $scope.showAddButton  = false;
+    $scope.chatBoxVisible = false;
 
     
     Relay.onRecieve('user', function(e, userdata){
       if(userdata){
         //console.log('----> Received User', userdata);
-        $scope.user = userdata;
-        $scope.loggedIn = true;            
-        $scope.loaderStatus = false;
+        $scope.user          = userdata;
+        $scope.loggedIn      = true;            
+        $scope.loaderStatus  = false;
         $scope.showAddButton = $scope.loggedIn;          
       }else{
-        $scope.loggedIn = false;            
-        $scope.showAddButton =false;
+        $scope.loggedIn      = false;            
+        $scope.showAddButton = false;
       }
     });
 
@@ -268,8 +269,8 @@ kingsapp.controller('baseCtrl', [
       $scope.loaderStatus = true;
       dataService.signOut()
       .then(function(){
-        $scope.loggedIn = false;
-        $scope.showAddButton =false;
+        $scope.loggedIn      = false;
+        $scope.showAddButton = false;
         $state.go('base.login', {
         });
       })
@@ -286,4 +287,17 @@ kingsapp.controller('baseCtrl', [
         LIB.register('googleMaps');
       });
     }getMap();
+
+
+    //Open Chat Box
+    $scope.showChatBox = function(){
+      console.log('Open Chat Box');
+      $scope.chatBoxVisible = true;
+    }
+
+    // Hide Chat Box
+    $scope.hideChatBox = function(){
+      console.log('Hide Chat Box');
+      $scope.chatBoxVisible = false;
+    }
 }]);
