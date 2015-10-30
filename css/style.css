@@ -435,3 +435,26 @@
 ::selection{
   background-color: rgba(114, 76, 159, 0.37);
 }
+
+/**
+ * Chat
+ */
+.chat-button{
+  position: fixed !important;
+  right: 2% !important;
+  bottom: 2% !important;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 62px;
+  box-shadow: 0 2px 2px rgba(0,0,0,.3) !important;
+  z-index: 1000;
+  border-radius: 28px;
+  border: 0 none;
+  color: #FFFFFF;
+  background: #0FB2FC;
+  font-size:24px;
+}
+
+.chat-button:hover{
+  opacity: 0.8;
+}
