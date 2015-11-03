@@ -7,7 +7,8 @@ var kingsapp = angular.module('kingsapp', [
      'kings-app.objects',
      'formBuilder',
      'objectsQueryBuilder',
-     'global-directives'
+     'global-directives',
+     'kings-app.chat'
     ]);
 
 /* Application cache */
@@ -33,6 +34,12 @@ kingsapp.config([
     .state('copyrights',{
       url:"/copyrights",
       templateUrl: 'partials/copyrights.html'
+    })
+    .state('chat', {
+      url:'/chat',
+      resolve:dashboardResolvers(),
+      controller: 'chatCtrl',
+      templateUrl: 'partials/chat.html'
     })
     .state('base.login', {
       url: "/login",
@@ -71,6 +78,13 @@ kingsapp.config([
       controller: 'dashboardCtrl',
       templateUrl: 'partials/dashboard.html'
     })
+    
+    .state('base.dashboard.chat', {
+      url: '/chat',
+      controller: 'chatCtrl',
+      templateUrl: 'partials/chat.html'
+    })
+
     .state('base.dashboard.objectsList', {
       url: "/:classUid?p&skip&filter",
       controller: 'listCtrl',
@@ -117,13 +131,13 @@ kingsapp.config([
         apihost : window.location.protocol+'//'+ window.location.host+'/v1',
         url     : window.location.protocol+'//'+ window.location.host,
         version : "/v1",
-        api_key : "bltbfb51fc159335dd8" //DEV
-        //api_key : "blt72c50188711c48b3" //PROD
+        //api_key : "bltbfb51fc159335dd8" //DEV
+        api_key : "blt72c50188711c48b3" //PROD
       },
     }
 
     /* Set App Env */
-    dataServiceProvider.setAppConfig(appEnv.local);
+    dataServiceProvider.setAppConfig(appEnv.dev);
 
     function dashboardResolvers(){
       return {

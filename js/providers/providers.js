@@ -203,7 +203,18 @@ angular.module('kings-app.providers', [])
   },{
     name: "Track Analytic",
     id:"track_analytic"
+  }]
+},{
+  text:"Game Details",
+  id:"live_game_detail",
+  columns:[{
+    name: "Game Code",
+    id:"gcode"
   },{
-
+    name:"Uid",
+    id:"uid"
+  },{
+    name:"Game ID",
+    id:"gid"
   }]
 }])
