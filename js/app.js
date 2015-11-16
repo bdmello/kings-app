@@ -35,12 +35,6 @@ kingsapp.config([
       url:"/copyrights",
       templateUrl: 'partials/copyrights.html'
     })
-    .state('chat', {
-      url:'/chat',
-      resolve:dashboardResolvers(),
-      controller: 'chatCtrl',
-      templateUrl: 'partials/chat.html'
-    })
     .state('base.login', {
       url: "/login",
       templateUrl: 'partials/login.html',
@@ -78,17 +72,9 @@ kingsapp.config([
       controller: 'dashboardCtrl',
       templateUrl: 'partials/dashboard.html'
     })
-    
-    .state('base.dashboard.chat', {
-      url: '/chat',
-      controller: 'chatCtrl',
-      templateUrl: 'partials/chat.html'
-    })
-
     .state('base.dashboard.objectsList', {
       url: "/:classUid?p&skip&filter",
       controller: 'listCtrl',
-      //resolve: listResolvers(),
       resolve: classSchemaResolvers(),
       templateUrl: 'partials/list.html'
     })
@@ -137,7 +123,7 @@ kingsapp.config([
     }
 
     /* Set App Env */
-    dataServiceProvider.setAppConfig(appEnv.dev);
+    dataServiceProvider.setAppConfig(appEnv.local);
 
     function dashboardResolvers(){
       return {

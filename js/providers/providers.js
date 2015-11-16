@@ -153,7 +153,7 @@ angular.module('kings-app.providers', [])
     name : "College",
     id : "college"
   }]
-},{
+},/*{
   id : "config",
   text : "Config",
   singleton : true,
@@ -162,7 +162,7 @@ angular.module('kings-app.providers', [])
     name:"Uid",
     id: "uid"
   }]
-},{
+},*/{
   id : "transportation",
   text: "Transportation",
   columns:[{
