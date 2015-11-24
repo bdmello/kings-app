@@ -106,6 +106,13 @@ kingsapp.config([
         api_key : "blt72c50188711c48b3"
       },
 
+      uat : {
+        apihost : "https://kings-backend.built.io/v1",
+        url     : "https://kings-backend.built.io",
+        version : "/v1",
+        api_key : "blt6184a48e20fb5119"
+      },
+
       dev : {
         apihost : "http://code-bltdev.cloudthis.com/v1",
         url     : "http://code-bltdev.cloudthis.com",
@@ -118,12 +125,13 @@ kingsapp.config([
         url     : window.location.protocol+'//'+ window.location.host,
         version : "/v1",
         //api_key : "bltbfb51fc159335dd8" //DEV
-        api_key : "blt72c50188711c48b3" //PROD
+        api_key : "blt6184a48e20fb5119" //UAT
+        //api_key : "blt72c50188711c48b3" //PROD
       },
     }
 
     /* Set App Env */
-    dataServiceProvider.setAppConfig(appEnv.local);
+    dataServiceProvider.setAppConfig(appEnv.uat);
 
     function dashboardResolvers(){
       return {

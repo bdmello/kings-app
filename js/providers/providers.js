@@ -137,6 +137,9 @@ angular.module('kings-app.providers', [])
     name:"Last Name",
     id: "ln"
   },{
+    name:"Sequence",
+    id:"sequence"
+  },{
     name:"Player Position",
     id: "pos"
   }]
@@ -216,5 +219,15 @@ angular.module('kings-app.providers', [])
   },{
     name:"Game ID",
     id:"gid"
+  }]
+},{
+  text:"Push Notification",
+  id:"push_notification",
+  columns:[{
+    name:"Uid",
+    id:"uid"
+  },{
+    name:"Title",
+    id:"title"
   }]
 }])
